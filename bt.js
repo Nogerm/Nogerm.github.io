@@ -42,7 +42,8 @@ function connect() {
   log('Connecting to Bluetooth Device...');
   return bluetoothDevice.gatt.connect()
   .then(server => {
-    log('> Bluetooth Device connected');
+		log('> Bluetooth Device connected');
+		window.alert("Bluetooth Device is already connected");
   });
 }
 
@@ -55,13 +56,13 @@ function onDisconnectButtonClick() {
     bluetoothDevice.gatt.disconnect();
   } else {
 		log('> Bluetooth Device is already disconnected');
-		console.alert("Bluetooth Device is already disconnected");
   }
 }
 
 function onDisconnected(event) {
   // Object event.target is Bluetooth Device getting disconnected.
-  log('> Bluetooth Device disconnected');
+	log('> Bluetooth Device disconnected');
+	window.alert("Bluetooth Device is already disconnected");
 }
 
 
@@ -71,7 +72,6 @@ function onReconnectButtonClick() {
   }
   if (bluetoothDevice.gatt.connected) {
 		log('> Bluetooth Device is already connected');
-		console.alert("Bluetooth Device is already connected");
     return;
   }
   connect()
