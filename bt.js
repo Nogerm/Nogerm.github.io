@@ -1,5 +1,9 @@
 var bluetoothDevice;
 
+function log(inputStr) {
+	console.log(inputStr);
+}
+
 function onScanButtonClick() {
   let options = {filters: []};
 
