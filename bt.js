@@ -54,7 +54,8 @@ function onDisconnectButtonClick() {
   if (bluetoothDevice.gatt.connected) {
     bluetoothDevice.gatt.disconnect();
   } else {
-    log('> Bluetooth Device is already disconnected');
+		log('> Bluetooth Device is already disconnected');
+		console.alert("Bluetooth Device is already disconnected");
   }
 }
 
@@ -69,7 +70,8 @@ function onReconnectButtonClick() {
     return;
   }
   if (bluetoothDevice.gatt.connected) {
-    log('> Bluetooth Device is already connected');
+		log('> Bluetooth Device is already connected');
+		console.alert("Bluetooth Device is already connected");
     return;
   }
   connect()
