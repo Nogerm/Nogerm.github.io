@@ -1,26 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-				<script src="bt.js"></script>
-				<script src="https://d3js.org/d3.v5.min.js"></script>
-    </head>
-    <body>
-				<div>
-					<input id="service" type="text" list="services" autofocus="" placeholder="Bluetooth Service">
-					<input id="name" type="text" placeholder="Device Name">
-					<input id="namePrefix" type="text" placeholder="Device Name Prefix">
-					<input type="button" value="Scan" onclick=onScanButtonClick()>
-					<input type="button" value="Disconnect" onclick=onDisconnectButtonClick()>
-					<input type="button" value="Reconnect" onclick=onReconnectButtonClick()>
-				</div>
-				<div>
-					<form id="send-form">
-						<input id="input" type="text">
-						<button type="submit">Send</button>
-					</form>
-				</div>
-				
-    </body>
+  <head>
+    <script src="bt.js"></script>
+		<script src="highcharts.js"></script>
+		<script src="exporting.js"></script>
+    <script src="export-data.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    
+    <link href="./css/style.css" rel="stylesheet" type="text/css" />
+    <link href='./css/notosans.css' rel='stylesheet' type='text/css'>
+    <link href="./css/materialicon.css" rel='stylesheet' type='text/css'>
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+  </head>
+  <body class="body">
+    <div class="wrapper">
+      <div class="box title">
+        <h1 class="fonts">Soteria Diagnostic Tool</h1>
+        <h4 class="fonts">System real-time data through BLE connection</h4>
+      </div>
+      <div class="box setting">
+        <div class="labelContainer">
+          <label class="fonts">Device name : </label>
+          <input id="device_name" type="text" disabled>
+        </div>
+        <div class="labelContainer">
+          <label class="fonts">Query interval: </label>
+          <input id="query_interval" type="text" onchange="setQueryInterval()">
+        </div>
+        <div class="labelContainer">
+          <label class="fonts">Data points: </label>
+          <input id="data_points" type="text" onchange="setDataPointNum()" disabled>
+        </div>
+        <div class="buttonContainer">
+          <button id="btn_scan" class="button" onclick="onScanButtonClick()">
+            <i class="material-icons iconfont">search</i> <a>Scan</a>
+          </button>
+          <button id="btn_disconnect" class="button"onclick="onDisconnectButtonClick()" disabled>
+            <i class="material-icons iconfont">close</i> Disconnect
+          </button>
+          <button id="btn_reconnect" class="button" onclick="onReconnectButtonClick()" disabled>
+            <i class="material-icons iconfont">autorenew</i> Reconnect
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tabs">
+      <div class="tab" name="cssTab">
+        <input type="radio" name="cssTabs" value="1" id="tab-1" checked class="tab-switch" onchange="radioChange(this)">
+        <label for="tab-1" class="tab-label">
+          <i class="material-icons spaceRight">insert_chart</i>Real-time data
+        </label>
+        
+        <div class="tab-content">
+          <div class="gaugeWrapper">
+            <div class="infoWrapper">
+              <div id="gauge-pitch" style="height: 200px;"></div>
+              <div class="flexFill"></div>
+              <div id="gauge-rpm-l" style="height: 200px;"></div>
+            </div>
+            <div class="infoWrapper">
+              <div class="infoContainer">
+                <label>Pitch raw value:</label>
+                <label id="label-pitch-raw"></label>
+              </div>
+              <div class="infoContainer">
+                <label>Pitch datum:</label>
+                <label id="label-pitch-datum"></label>
+              </div>
+              <div class="infoContainer">
+                <label>Force level:</label>
+                <label id="label-force-level"></label>
+              </div>
+              <div class="flexFill"></div>
+              <div id="gauge-rpm-r" style="height: 200px;"></div>
+            </div>
+            <div class="box vxvy">
+                <div id="vxvy"></div>	
+              </div>
+          </div>
+          <div class="contentWrapper">
+            <div class="box pitch">
+              <div id="pitch"></div>	
+            </div>
+            <div class="box intent">
+              <div id="intent"></div>	
+            </div>
+            <div class="box current_l">
+              <div id="current_l"></div>	
+            </div>
+            <div class="box current_r">
+              <div id="current_r"></div>	
+            </div>
+            <div class="box rpm_l">
+              <div id="rpm_l"></div>	
+            </div>
+            <div class="box rpm_r">
+              <div id="rpm_r"></div>	
+            </div>
+            <div class="box vx">
+              <div id="vx"></div>	
+            </div>
+            <div class="box vy">
+              <div id="vy"></div>	
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab">
+        <input type="radio" name="cssTabs" value="2" id="tab-2" class="tab-switch" onchange="radioChange(this)">
+        <label for="tab-2" class="tab-label">
+          <i class="material-icons spaceRight">assignment</i>Log
+        </label>
+        <div class="tab-content">
+          <button id="btn_query_log" class="button"onclick="onQueryLogButtonClick()">Query</button>
+          <div id="logListContainer"></div>
+        </div>
+      </div>
+      <div class="tab">
+        <input type="radio" name="cssTabs" value="3" id="tab-3" class="tab-switch" onchange="radioChange(this)">
+        <label for="tab-3" class="tab-label">
+          <i class="material-icons spaceRight">videogame_asset</i>Remote Control
+        </label>
+        <div class="tab-content">
+          Remote control
+        </div>
+      </div>
+    </div>		
+  </body>
 </html>
 
 
