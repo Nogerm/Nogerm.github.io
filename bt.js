@@ -17,7 +17,15 @@ let newData = {
   rpm_l: 0,
   rpm_r: 0,
   vx: 0,
-  vy: 0
+  vy: 0,
+  sw_lf: 1,
+  sw_lb: 1,
+  sw_rf: 1,
+  sw_rb: 1,
+  spd_dec: 0,
+  spd_pls: 0,
+  fac_pls: 0,
+  fac_mns: 0,
 };
 
 //charts
@@ -32,11 +40,10 @@ var chartCurrentR   = null;
 var chartRPML       = null;
 var chartRPMR       = null;
 var chartVx         = null;
-var chartVy         = null;
 
 //config
 const device_name_filter = "HST_UART";
-const default_query_interval = 300;
+const default_query_interval = 100;
 const default_data_points = 40;
 const default_selected_tab = 1;
 const default_log_number_return = 40;
@@ -107,11 +114,9 @@ window.onload = function () {
     //update rpm right
     if(chartRPMR) chartRPMR.series[0].addPoint([(new Date()).getTime(), newData.rpm_r], true, true);
 
-    //update vx
+    //update vx/vy
     if(chartVx) chartVx.series[0].addPoint([(new Date()).getTime(), newData.vx], true, true);
-
-    //update vy
-    if(chartVy) chartVy.series[0].addPoint([(new Date()).getTime(), newData.vy], true, true);
+    if(chartVx) chartVx.series[1].addPoint([(new Date()).getTime(), newData.vy], true, true);
 
     //update label pitch value
     document.getElementById("label-pitch-raw").innerHTML = (newData.pitch_datum + newData.pitch).toFixed(2);
@@ -121,6 +126,24 @@ window.onload = function () {
 
     //update label force level
     document.getElementById("label-force-level").innerHTML = newData.force_level;
+
+    //update label speed decrease
+    document.getElementById("label-speed-decrease").innerHTML = newData.spd_dec;
+
+    //update label speed plus
+    document.getElementById("label-speed-plus").innerHTML = newData.spd_pls;
+
+    //update label factor plus
+    document.getElementById("label-factor-plus").innerHTML = newData.fac_pls;
+
+    //update label factor minus
+    document.getElementById("label-factor-minus").innerHTML = newData.fac_mns;
+
+    //update switch status
+    document.getElementById("sw_lf").className = (newData.sw_lf == 0) ? "dot dotGreen" : "dot";
+    document.getElementById("sw_lb").className = (newData.sw_lb == 0) ? "dot dotGreen" : "dot";
+    document.getElementById("sw_rf").className = (newData.sw_rf == 0) ? "dot dotGreen" : "dot";
+    document.getElementById("sw_rb").className = (newData.sw_rb == 0) ? "dot dotGreen" : "dot";
 
   }, (query_interval === null) ? default_query_interval : query_interval);
 }
@@ -300,6 +323,14 @@ function clearData() {
   newData.rpm_r = 0;
   newData.vx = 0;
   newData.vy = 0;
+  newData.sw_lf = 1;
+  newData.sw_lb = 1;
+  newData.sw_rf = 1;
+  newData.sw_rb = 1;
+  newData.spd_dec = 0;
+  newData.spd_pls = 0;
+  newData.fac_pls = 0;
+  newData.fac_mns = 0;
 }
 
 function parseData(event) {
@@ -324,19 +355,26 @@ function parseData(event) {
         newData.rpm_r = parseInt(data_array[9]);
         newData.vx = parseFloat(data_array[10]);
         newData.vy = parseFloat(data_array[11]);
+        newData.spd_dec = parseFloat(data_array[12]);
+        newData.spd_pls = parseFloat(data_array[13]);
+        newData.fac_pls = parseFloat(data_array[14]);
+        newData.fac_mns = parseFloat(data_array[15]);
+        newData.sw_lf = parseInt(data_array[16]);
+        newData.sw_rf = parseInt(data_array[17]);
+        newData.sw_lb = parseInt(data_array[18]);
+        newData.sw_rb = parseInt(data_array[19]);
+      } else if(selectedTab ==2) {
+        let logData = getLogFromBytes(dataView);
+        var str = '<ol type="1">'
+
+        logData.forEach(function(logEvent) {
+          str += '<li>'+ logEvent + '</li>';
+        }); 
+
+        str += '</ol>';
+        document.getElementById("logListContainer").innerHTML = str;
       }
-    } else if(selectedTab ==2) {
-      let logData = getLogFromBytes(dataView);
-      var str = '<ol type="1">'
-
-      logData.forEach(function(logEvent) {
-        str += '<li>'+ logEvent + '</li>';
-      }); 
-
-      str += '</ol>';
-      document.getElementById("logListContainer").innerHTML = str;
     }
-    
   }
 }
 
@@ -744,7 +782,7 @@ function configCharts() {
 
   //Vx
   chartVx = Highcharts.chart('vx', {
-    colors: ['#009688'],
+    colors: ['#009688', '#ff8a65'],
     chart: {
       type: 'spline',
       animation: Highcharts.svg
@@ -753,7 +791,7 @@ function configCharts() {
       useUTC: false
     },
     title: {
-      text: 'Voltage X'
+      text: 'Voltage X / Y'
     },
     xAxis: {
       type: 'datetime',
@@ -776,7 +814,7 @@ function configCharts() {
       pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
     },
     legend: {
-      enabled: false
+      enabled: true
     },
     exporting: {
       enabled: false
@@ -797,49 +835,8 @@ function configCharts() {
         }
         return data;
       }())
-    }]
-  });
-
-  //Vy
-  chartVy = Highcharts.chart('vy', {
-    colors: ['#009688'],
-    chart: {
-      type: 'spline',
-      animation: Highcharts.svg
     },
-    time: {
-      useUTC: false
-    },
-    title: {
-      text: 'Voltage Y'
-    },
-    xAxis: {
-      type: 'datetime',
-      tickPixelInterval: x_label_interval
-    },
-    yAxis: {
-      title: {
-        text: 'Value'
-      },
-      plotLines: [{
-        value: 0,
-        width: 1,
-        color: '#808080'
-      }],
-      max: 5,
-      min: 0
-    },
-    tooltip: {
-      headerFormat: '<b>{series.name}</b><br/>',
-      pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
-    },
-    legend: {
-      enabled: false
-    },
-    exporting: {
-      enabled: false
-    },
-    series: [{
+    {
       name: 'vy',
       data: (function () {
         // generate an array of random data
@@ -1492,4 +1489,4 @@ const log_define = [
     "key": "Security car moving",
     "value": 0xA2
   }
-]
+];

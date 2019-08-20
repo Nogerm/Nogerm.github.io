@@ -73,12 +73,31 @@
                 <label>Force level:</label>
                 <label id="label-force-level"></label>
               </div>
+              <div class="infoContainer">
+                <label>Speed Decrease:</label>
+                <label id="label-speed-decrease"></label>
+              </div>
               <div class="flexFill"></div>
               <div id="gauge-rpm-r" style="height: 200px;"></div>
             </div>
-            <div class="box vxvy">
-                <div id="vxvy"></div>	
+            <div class="box" style="position: relative;background-image: url(./handle_bg.jpg); background-repeat: no-repeat;background-size: contain;">
+              <div id="sw_lf" class="dot" style="position: absolute;left: 50px;top: 130px;"></div>
+              <div id="sw_lb" class="dot" style="position: absolute;left: 35px;top: 250px;"></div>	
+              <div id="sw_rf" class="dot" style="position: absolute;right: 85px;top: 130px;"></div>	
+              <div id="sw_rb" class="dot" style="position: absolute;right: 70px;top: 250px;"></div>
+              <div class="fonts" style="position: absolute;left: 200px;top: 50px;font-size: 24px;">
+                <label>Speed Plus:</label>
+                <label id="label-speed-plus"></label>
               </div>
+              <div class="fonts" style="position: absolute;left: 200px;top: 90px;font-size: 24px;">
+                <label>Factor Plus:</label>
+                <label id="label-factor-plus"></label>
+              </div>
+              <div class="fonts" style="position: absolute;left: 200px;top: 130px;font-size: 24px;">
+                <label>Factor Minus:</label>
+                <label id="label-factor-minus"></label>
+              </div>	
+            </div>
           </div>
           <div class="contentWrapper">
             <div class="box pitch">
@@ -86,6 +105,12 @@
             </div>
             <div class="box intent">
               <div id="intent"></div>	
+            </div>
+            <div class="box vx">
+              <div id="vx"></div>	
+            </div>
+            <div class="box vxvy">
+              <div id="vxvy"></div>	
             </div>
             <div class="box current_l">
               <div id="current_l"></div>	
@@ -98,12 +123,6 @@
             </div>
             <div class="box rpm_r">
               <div id="rpm_r"></div>	
-            </div>
-            <div class="box vx">
-              <div id="vx"></div>	
-            </div>
-            <div class="box vy">
-              <div id="vy"></div>	
             </div>
           </div>
         </div>
