@@ -296,11 +296,11 @@ function onReconnectButtonClick() {
 }
 
 function on_remote_fw_ButtonClick() {
-  let aBuffer_log = new ArrayBuffer(1);
-  let dataView_log = new DataView(aBuffer_log);
-  dataView_log.setUint8(0, BLE_REMOTE_FORWARD);
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_FORWARD);
 
-  TXcharacteristic.writeValue(aBuffer_log)
+  TXcharacteristic.writeValue(aBuffer_remote)
   .then(() => {
     //console.log('writeValue ok');
   })
@@ -310,11 +310,11 @@ function on_remote_fw_ButtonClick() {
 }
 
 function on_remote_bk_ButtonClick() {
-  let aBuffer_log = new ArrayBuffer(1);
-  let dataView_log = new DataView(aBuffer_log);
-  dataView_log.setUint8(0, BLE_REMOTE_BACKWARD );
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_BACKWARD );
 
-  TXcharacteristic.writeValue(aBuffer_log)
+  TXcharacteristic.writeValue(aBuffer_remote)
   .then(() => {
     //console.log('writeValue ok');
   })
@@ -323,11 +323,11 @@ function on_remote_bk_ButtonClick() {
   });
 }
 function on_remote_L_ButtonClick() {
-  let aBuffer_log = new ArrayBuffer(1);
-  let dataView_log = new DataView(aBuffer_log);
-  dataView_log.setUint8(0, BLE_REMOTE_TURN_LEFT);
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_TURN_LEFT);
 
-  TXcharacteristic.writeValue(aBuffer_log)
+  TXcharacteristic.writeValue(aBuffer_remote)
   .then(() => {
     //console.log('writeValue ok');
   })
@@ -337,11 +337,11 @@ function on_remote_L_ButtonClick() {
 }
 
 function on_remote_R_ButtonClick() {
-  let aBuffer_log = new ArrayBuffer(1);
-  let dataView_log = new DataView(aBuffer_log);
-  dataView_log.setUint8(0, BLE_REMOTE_TURN_RIGHT);
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_TURN_RIGHT);
 
-  TXcharacteristic.writeValue(aBuffer_log)
+  TXcharacteristic.writeValue(aBuffer_remote)
   .then(() => {
     //console.log('writeValue ok');
   })
@@ -351,11 +351,11 @@ function on_remote_R_ButtonClick() {
 }
 
 function on_remote_stop_ButtonClick() {
-  let aBuffer_log = new ArrayBuffer(1);
-  let dataView_log = new DataView(aBuffer_log);
-  dataView_log.setUint8(0, BLE_REMOTE_STOP);
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_STOP);
 
-  TXcharacteristic.writeValue(aBuffer_log)
+  TXcharacteristic.writeValue(aBuffer_remote)
   .then(() => {
     //console.log('writeValue ok');
   })
