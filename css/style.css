@@ -28,6 +28,18 @@
   justify-content: center;
 }
 
+.button_2 {
+  height: 50px;
+  width:  150px;
+  border-radius: 8px;
+  margin-right: 10px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  margin-left: 164px;
+  margin-top: 14px;
+}
+
 .bgGreen {
   background: #66bb6a;
 }
