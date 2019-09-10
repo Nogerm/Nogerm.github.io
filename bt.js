@@ -43,7 +43,7 @@ var chartVx         = null;
 
 //config
 const device_name_filter = "HST_UART";
-const default_query_interval = 100;
+const default_query_interval = 50;
 const default_data_points = 40;
 const default_selected_tab = 1;
 const default_log_number_return = 40;
