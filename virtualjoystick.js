@@ -112,7 +112,7 @@ VirtualJoystick.prototype.up	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if(( deltaY >= 0 ) || ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))	
+	if(( deltaY >= 0 ) || ( Math.abs(deltaX) > Math.abs(deltaY) ))	
 	{
 		return false;
 	}
@@ -126,7 +126,7 @@ VirtualJoystick.prototype.down	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if(( deltaY <= 0 )|| ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))		return false;
+	if(( deltaY <= 0 )|| ( Math.abs(deltaX) > Math.abs(deltaY) ))		return false;
 	else
 	on_remote_2_bk_ButtonClick();
 	return true;
@@ -135,7 +135,7 @@ VirtualJoystick.prototype.right	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if(( deltaX <= 0 ) || ( Math.abs(deltaY) >= 10 ) || ( Math.abs(deltaY) > 2*Math.abs(deltaX) ))	return false;
+	if(( deltaX <= 0 ) || ( Math.abs(deltaY) >= 10 ) || ( Math.abs(deltaY) > Math.abs(deltaX) ))	return false;
 	else
 	on_remote_2_R_ButtonClick()
 	return true;
@@ -144,7 +144,7 @@ VirtualJoystick.prototype.left	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if(( deltaX >= 0 ) || ( Math.abs(deltaY) >= 10) || ( Math.abs(deltaY) > 2*Math.abs(deltaX) ))	return false;
+	if(( deltaX >= 0 ) || ( Math.abs(deltaY) >= 10) || ( Math.abs(deltaY) > Math.abs(deltaX) ))	return false;
 	else
 	on_remote_2_L_ButtonClick()
 	return true;
