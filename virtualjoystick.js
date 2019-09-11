@@ -108,17 +108,22 @@ VirtualJoystick.touchScreenAvailable	= function()
 VirtualJoystick.prototype.deltaX	= function(){ return this._stickX - this._baseX;	}
 VirtualJoystick.prototype.deltaY	= function(){ return this._stickY - this._baseY;	}
 
+if(VirtualJoystick.prototype.deltaX == 0 && VirtualJoystick.prototype.deltaY == 0)
+{
+	on_remote_2_Stop_ButtonClick();
+}
+
 VirtualJoystick.prototype.up	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
 	if(( deltaY >= 0 ) || ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))	
-	{	on_remote_stop_ButtonClick();
+	{
 		return false;
 	}
 	else
 	{
-	on_remote_fw_ButtonClick();
+	on_remote_2_fw_ButtonClick();
 	return true;
 	}
 }
@@ -128,7 +133,7 @@ VirtualJoystick.prototype.down	= function(){
 	var deltaY	= this.deltaY();
 	if(( deltaY <= 0 )|| ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))		return false;
 	else
-
+	on_remote_2_bk_ButtonClick();
 	return true;
 }
 VirtualJoystick.prototype.right	= function(){
@@ -137,7 +142,7 @@ VirtualJoystick.prototype.right	= function(){
 	var deltaY	= this.deltaY();
 	if(( deltaX <= 0 ) || ( Math.abs(deltaY) >= 10 ) || ( Math.abs(deltaY) > 2*Math.abs(deltaX) ))	return false;
 	else
-
+	on_remote_2_R_ButtonClick()
 	return true;
 }
 VirtualJoystick.prototype.left	= function(){
@@ -146,7 +151,7 @@ VirtualJoystick.prototype.left	= function(){
 	var deltaY	= this.deltaY();
 	if(( deltaX >= 0 ) || ( Math.abs(deltaY) >= 10) || ( Math.abs(deltaY) > 2*Math.abs(deltaX) ))	return false;
 	else
-
+	on_remote_2_L_ButtonClick()
 	return true;
 }
 

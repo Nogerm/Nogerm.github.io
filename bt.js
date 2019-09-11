@@ -62,6 +62,12 @@ const BLE_REMOTE_STOP        = 0xE3;
 const BLE_REMOTE_FUNC_1      = 0xE1;
 const BLE_REMOTE_FUNC_2      = 0xE0;
 
+const BLE_REMOTE_2_FORWARD     = 0xDB;
+const BLE_REMOTE_2_BACKWARD    = 0xD9;
+const BLE_REMOTE_2_TURN_LEFT   = 0xD7;
+const BLE_REMOTE_2_TURN_RIGHT  = 0xD5;
+const BLE_REMOTE_2_STOP        = 0xD3;
+
 const RESPONSE_HEADER_POS = 0;
 const HEX_COLOR_GREEN = "#66bb6a";
 const HEX_COLOR_RED   = "#ef5350";
@@ -379,8 +385,78 @@ function on_remote_Demo_ButtonClick() {
   });
 }
 
+////////////////////////////Remote_2_function//////////////////////////
 
+function on_remote_2_fw_ButtonClick() {
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_2_FORWARD);
 
+  TXcharacteristic.writeValue(aBuffer_remote)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
+}
+
+function on_remote_2_bk_ButtonClick() {
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_2_BACKWARD );
+
+  TXcharacteristic.writeValue(aBuffer_remote)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
+}
+function on_remote_2_L_ButtonClick() {
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_2_TURN_LEFT);
+
+  TXcharacteristic.writeValue(aBuffer_remote)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
+}
+
+function on_remote_2_R_ButtonClick() {
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_2_TURN_RIGHT);
+
+  TXcharacteristic.writeValue(aBuffer_remote)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
+}
+
+function on_remote_2_stop_ButtonClick() {
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_2_STOP);
+
+  TXcharacteristic.writeValue(aBuffer_remote)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
+}
+
+////////////////////////Remote_2_function_End//////////////////////////
 
 
 
