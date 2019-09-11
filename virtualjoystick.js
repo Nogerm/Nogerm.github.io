@@ -112,11 +112,15 @@ VirtualJoystick.prototype.up	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if(( deltaY >= 0 ) || ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))	return false;
-
+	if(( deltaY >= 0 ) || ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))	
+	{	on_remote_stop_ButtonClick();
+		return false;
+	}
 	else
+	{
 	on_remote_fw_ButtonClick();
 	return true;
+	}
 }
 VirtualJoystick.prototype.down	= function(){
 	if( this._pressed === false )	return false;
