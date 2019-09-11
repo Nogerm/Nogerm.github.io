@@ -27,8 +27,8 @@ var VirtualJoystick	= function(opts)
 	
 	if(this._stationaryBase === true){
 		this._baseEl.style.display	= "";
-		this._baseEl.style.left		= 0;//(this._baseX - this._baseEl.width /2)+"px";
-		this._baseEl.style.top		= 0;//(this._baseY - this._baseEl.height/2)+"px";
+		this._baseEl.style.left		= (this._baseX - this._baseEl.width /2)+"px";
+		this._baseEl.style.top		= (this._baseY - this._baseEl.height/2)+"px";
 	}
     
 	this._transform	= this._useCssTransform ? this._getTransformProperty() : false;
@@ -112,18 +112,17 @@ VirtualJoystick.prototype.up	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if( deltaY >= 0 )				return false;
-	if( Math.abs(deltaX) > 2*Math.abs(deltaY) )	return false;
-	else
+	if(( deltaY >= 0 ) || ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))	return false;
 
+	else
+	on_remote_fw_ButtonClick();
 	return true;
 }
 VirtualJoystick.prototype.down	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if( deltaY <= 0 )				return false;
-	if( Math.abs(deltaX) > 2*Math.abs(deltaY) )	return false;
+	if(( deltaY <= 0 )|| ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))		return false;
 	else
 
 	return true;
@@ -132,9 +131,7 @@ VirtualJoystick.prototype.right	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if( deltaX <= 0 )				return false;
-	if( Math.abs(deltaY) >= 10 )			return false;
-	if( Math.abs(deltaY) > 2*Math.abs(deltaX) )	return false;
+	if(( deltaX <= 0 ) || ( Math.abs(deltaY) >= 10 ) || ( Math.abs(deltaY) > 2*Math.abs(deltaX) ))	return false;
 	else
 
 	return true;
@@ -143,9 +140,7 @@ VirtualJoystick.prototype.left	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
-	if( deltaX >= 0 )				return false;
-	if( Math.abs(deltaY) >= 10)			return false;
-	if( Math.abs(deltaY) > 2*Math.abs(deltaX) )	return false;
+	if(( deltaX >= 0 ) || ( Math.abs(deltaY) >= 10) || ( Math.abs(deltaY) > 2*Math.abs(deltaX) ))	return false;
 	else
 
 	return true;
