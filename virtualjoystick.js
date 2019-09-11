@@ -108,17 +108,8 @@ VirtualJoystick.touchScreenAvailable	= function()
 VirtualJoystick.prototype.deltaX	= function(){ return this._stickX - this._baseX;	}
 VirtualJoystick.prototype.deltaY	= function(){ return this._stickY - this._baseY;	}
 
-if(VirtualJoystick.prototype.deltaX == 0 && VirtualJoystick.prototype.deltaY == 0)
-{
-	on_remote_2_stop_ButtonClick();
-}
-
 VirtualJoystick.prototype.up	= function(){
-	if( this._pressed === false )
-	{
-		on_remote_2_stop_ButtonClick();
-		return false;
-	}	
+	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
 	if(( deltaY >= 0 ) || ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))	
@@ -132,11 +123,7 @@ VirtualJoystick.prototype.up	= function(){
 	}
 }
 VirtualJoystick.prototype.down	= function(){
-	if( this._pressed === false )	
-	{
-		on_remote_2_stop_ButtonClick();
-		return false;
-	}	
+	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
 	if(( deltaY <= 0 )|| ( Math.abs(deltaX) > 2*Math.abs(deltaY) ))		return false;
@@ -145,11 +132,7 @@ VirtualJoystick.prototype.down	= function(){
 	return true;
 }
 VirtualJoystick.prototype.right	= function(){
-	if( this._pressed === false )
-	{
-		on_remote_2_stop_ButtonClick();
-		return false;
-	}	
+	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
 	if(( deltaX <= 0 ) || ( Math.abs(deltaY) >= 10 ) || ( Math.abs(deltaY) > 2*Math.abs(deltaX) ))	return false;
@@ -158,11 +141,7 @@ VirtualJoystick.prototype.right	= function(){
 	return true;
 }
 VirtualJoystick.prototype.left	= function(){
-	if( this._pressed === false )
-	{
-		on_remote_2_stop_ButtonClick();
-		return false;
-	}	
+	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
 	if(( deltaX >= 0 ) || ( Math.abs(deltaY) >= 10) || ( Math.abs(deltaY) > 2*Math.abs(deltaX) ))	return false;
@@ -185,6 +164,7 @@ VirtualJoystick.prototype._onUp	= function()
 	
 		this._baseX	= this._baseY	= 0;
 		this._stickX	= this._stickY	= 0;
+		on_remote_2_stop_ButtonClick();
 	}
 }
 
