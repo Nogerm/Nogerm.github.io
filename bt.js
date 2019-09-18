@@ -456,6 +456,20 @@ function on_remote_2_stop_ButtonClick() {
   });
 }
 
+function on_remote_func_2_ButtonClick() {
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, BLE_REMOTE_FUNC_2);
+
+  TXcharacteristic.writeValue(aBuffer_remote)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
+}
+
 ////////////////////////Remote_2_function_End//////////////////////////
 
 
