@@ -491,9 +491,9 @@ function setDataPointNum() {
 }
 
 function setSpeedUpNum() {
-  const newDataPointNum = parseInt(document.getElementById("remote_speed_up").value);
-  console.log("Set speed up: " + newDataPointNum);
-  remote_speed_up = newDataPointNum;
+  const newSpeedUPNum = parseInt(document.getElementById("remote_speed_up").value);
+  console.log("Set speed up: " + newSpeedUPNum);
+  remote_speed_up = newSpeedUPNum;
   dataView_remote.setUint8(0, remote_speed_up);
   TXcharacteristic.writeValue(aBuffer_remote)
   .then(() => {
