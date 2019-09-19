@@ -87,6 +87,7 @@ window.onload = function () {
   data_points = default_data_points;
   const remote_speed_up_field = document.getElementById("remote_speed_up");
   remote_speed_up_field.value = (remote_speed_up === null) ? default_remote_speed_up : remote_speed_up;
+
   selectedTab = default_selected_tab;
   document.getElementById("btn_scan").style.backgroundColor       = HEX_COLOR_GREEN;
   document.getElementById("btn_disconnect").style.backgroundColor = HEX_COLOR_GRAY;
@@ -494,7 +495,11 @@ function setSpeedUpNum() {
   const newSpeedUPNum = parseInt(document.getElementById("remote_speed_up").value);
   console.log("Set speed up: " + newSpeedUPNum);
   remote_speed_up = newSpeedUPNum;
+
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, remote_speed_up);
+
   TXcharacteristic.writeValue(aBuffer_remote)
   .then(() => {
     //console.log('writeValue ok');
