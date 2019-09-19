@@ -496,6 +496,12 @@ function setSpeedUpNum() {
   remote_speed_up = newDataPointNum;
   dataView_remote.setUint8(0, remote_speed_up);
   TXcharacteristic.writeValue(aBuffer_remote)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
 }
 
 function clearData() {
