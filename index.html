@@ -73,11 +73,15 @@
       </div>
       <div class="labelContainer">
         <label class="fonts">Query interval: </label>
-        <input id="query_interval" type="text" onchange="setQueryInterval()" disabled="">
+        <input id="query_interval" type="text" onchange="setQueryInterval()" enabled="">
       </div>
       <div class="labelContainer">
         <label class="fonts">Data points: </label>
         <input id="data_points" type="text" onchange="setDataPointNum()" disabled="">
+      </div>
+      <div class="labelContainer">
+        <label class="fonts">Speed Up+: </label>
+        <input id="remote_speed_up" type="text" onchange="setSpeedUpNum()" enabled="">
       </div>
       <div class="buttonContainer">
         <button id="btn_scan" class="button" onclick="onScanButtonClick()"

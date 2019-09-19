@@ -5,6 +5,7 @@ let queryTimer = null;
 let query_interval = null;
 let updateTimer = null;
 let data_points = null;
+let remote_speed_up = null;
 let selectedTab = null;
 let logData = [];
 let newData = {
@@ -45,6 +46,7 @@ var chartVx         = null;
 const device_name_filter = "HST_UART";
 const default_query_interval = 50;
 const default_data_points = 40;
+const default_remote_speed_up = 0;
 const default_selected_tab = 1;
 const default_log_number_return = 40;
 const x_label_interval = 150;
@@ -83,6 +85,8 @@ window.onload = function () {
   const data_points_field = document.getElementById("data_points");
   data_points_field.value = default_data_points;
   data_points = default_data_points;
+  const remote_speed_up_field = document.getElementById("remote_speed_up");
+  remote_speed_up_field.value = (remote_speed_up === null) ? default_remote_speed_up : remote_speed_up;
   selectedTab = default_selected_tab;
   document.getElementById("btn_scan").style.backgroundColor       = HEX_COLOR_GREEN;
   document.getElementById("btn_disconnect").style.backgroundColor = HEX_COLOR_GRAY;
@@ -484,6 +488,14 @@ function setDataPointNum() {
   const newDataPointNum = parseInt(document.getElementById("data_points").value);
   console.log("Set data points: " + newDataPointNum);
   data_points = newDataPointNum;
+}
+
+function setSpeedUpNum() {
+  const newDataPointNum = parseInt(document.getElementById("remote_speed_up").value);
+  console.log("Set speed up: " + newDataPointNum);
+  remote_speed_up = newDataPointNum;
+  dataView_remote.setUint8(0, remote_speed_up);
+  TXcharacteristic.writeValue(aBuffer_remote)
 }
 
 function clearData() {
