@@ -16,10 +16,10 @@ var VirtualJoystick	= function(opts)
 	this._container.style.position	= "relative"
 
 	this._container.appendChild(this._baseEl)
-	this._baseEl.style.position	= "absolute"
+	this._baseEl.style.position	= "fixed"
 	this._baseEl.style.display	= "none"
 	this._container.appendChild(this._stickEl)
-	this._stickEl.style.position	= "absolute"
+	this._stickEl.style.position	= "fixed"
 	this._stickEl.style.display	= "none"
 
 	this._pressed	= false;
