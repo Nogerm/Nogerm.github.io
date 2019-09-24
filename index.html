@@ -83,6 +83,13 @@
         <label class="fonts">Speed Up+: </label>
         <input id="remote_speed_up" type="text" onchange="setSpeedUpNum()" enabled="">
       </div>
+      <form>
+        Remote Speed Level		
+        <input type="radio" name="remote_speed_up" value="1" onchange="setSpeedUpNum()">1
+        <input type="radio" name="remote_speed_up" value="5" onchange="setSpeedUpNum()">5
+        <input type="radio" name="remote_speed_up" value="9" onchange="setSpeedUpNum()">9
+      </form>
+
       <div class="buttonContainer">
         <button id="btn_scan" class="button" onclick="onScanButtonClick()"
           style="background-color: rgb(102, 187, 106);">
