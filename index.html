@@ -79,21 +79,21 @@
         <label class="fonts">Data points: </label>
         <input id="data_points" type="text" onchange="setDataPointNum()" disabled="">
       </div>
-      <div class="labelContainer">
+     <div class="labelContainer">
         <label class="fonts">Speed Up+: </label>
-        <input id="remote_speed_up" type="text" onchange="setSpeedUpNum()" enabled="">
+        <input id="remote_speed_up_" type="text" onchange="setSpeedUpNum()" enabled="">
       </div>
-      <form>
-        Remote Speed Level		
-        <input id="remote_speed_up" type="radio" name="remote_speed_up"  type="text" value="1" onchange="setSpeedUpNum()">1
-        <input id="remote_speed_up" type="radio" name="remote_speed_up"  type="text" value="5" onchange="setSpeedUpNum()">5
-        <input id="remote_speed_up" type="radio" name="remote_speed_up"  type="text" value="9" onchange="setSpeedUpNum()">9
-      </form>
-      <select id="remote_speed_up" >
+      <select id="remote_speed_up" onchange="setSpeedUpNum()">
         <option value="#">請選擇</option>
-        <option value="1" onclick="setSpeedUpNum()">1</option>
-        <option value="5" onclick="setSpeedUpNum()">5</option>
-        <option value="9" onclick="setSpeedUpNum()">9</option>
+        <option value="1">1</option>
+        <option value="1">2</option>
+        <option value="1">3</option>
+        <option value="1">4</option>
+        <option value="5">5</option>
+        <option value="9">6</option>
+        <option value="5">7</option>
+        <option value="9">8</option>
+        <option value="9">9</option>
         </select>
 
       <div class="buttonContainer">
