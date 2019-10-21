@@ -1393,7 +1393,7 @@
         </div>
         <div class="buttonContainer">
           <button id="btn_func_1" class="button" onclick="on_remote_Demo_ButtonClick()">Demo</button>
-          <button id="btn_func_2" class="button" onclick="on_remote_func_2_ButtonClick()">Func_2</button>
+          <button id="btn_func_2" class="button" onclick="on_remote_func_2_ButtonClick()">Transformation</button>
         </div>
       </div>
     </div>
@@ -1522,9 +1522,19 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         textBox.value = final_transcript; // 顯示最終辨識文字
     if (interim_transcript.trim().length > 0) // 如果有中間辨識文字
         tempBox.value = interim_transcript; // 顯示中間辨識文字
-        if(textBox.value == "transformation")
+        if(textBox.value == "transformation" || textBox.value == "變形")
         {
           on_remote_func_2_ButtonClick();
+          textBox.value =="";
+        }
+        if(textBox.value == "forward" || textBox.value == "前進")
+        {
+          on_remote_fw_ButtonClick();
+          textBox.value =="";
+        }
+        if(textBox.value == "backward" || textBox.value == "後退")
+        {
+          on_remote_bk_ButtonClick();
           textBox.value =="";
         }
   };
