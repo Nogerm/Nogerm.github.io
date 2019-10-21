@@ -1461,7 +1461,7 @@
     <div class="tab">
       <input type="radio" name="cssTabs" value="5" id="tab-5" class="tab-switch" onchange="radioChange(this)">
       <label for="tab-5" class="tab-label">
-        <i class="material-icons spaceRight">videogame_asset</i>voice</label>
+        <i class="material-icons spaceRight">videogame_asset</i>Voice Control</label>
       <div class="tab-content">
 
     <script type="text/javascript">
@@ -1541,14 +1541,17 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
 }
 </script>   
 <br>
-最後結果：<input id="textBox" type="text" size="60" value=""><br>
-中間結果：<input id="tempBox" type="text" size="60" value=""><br>
+最後結果：<input id="textBox" type="text" size="60" value="" style="height:30px;font-size:20px;"><br>
+中間結果：<input id="tempBox" type="text" size="60" value="" style="height:30px;font-size:20px;"><br><br>
 辨識語言：
-<select id="langCombo">
+<select id="langCombo" style="width:120px;height:40px;font-size:20px;">
   <option value="en-US">英文(美國)</option>
   <option value="cmn-Hant-TW">中文(台灣)</option>
 </select>
-<input id="startStopButton" type="button" value="辨識" onclick="startButton(event)"><br>
+<br>
+<br>
+<input onclick="startButton(event)" value="開始辨識" type="button" id="startStopButton" style="width:220px;height:100px;font-size:50px;">
+<br>
 <label id="infoBox"></label>
     
 </div>
