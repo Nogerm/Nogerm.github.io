@@ -136,11 +136,11 @@ VirtualJoystick.prototype.right	= function(){
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
 	if(( Math.abs(deltaY) < 10  ) || ( Math.abs(deltaX) < 10  ) ||( deltaX <= 0 ) || ( Math.abs(deltaY) > Math.abs(deltaX) ))	return false;
-	else if (deltaY > 0)
+	else if (deltaY < 0)
 	{
 	on_remote_2_R_ButtonClick()		
 	}
-	else if (deltaY <= 0)
+	else if (deltaY >= 0)
 	{
 	on_remote_2_R_circle_ButtonClick()
 	}
@@ -151,9 +151,9 @@ VirtualJoystick.prototype.left	= function(){
 	var deltaX	= this.deltaX();
 	var deltaY	= this.deltaY();
 	if(( Math.abs(deltaY) < 10  ) || ( Math.abs(deltaX) < 10  ) ||( deltaX >= 0 )  || ( Math.abs(deltaY) > Math.abs(deltaX) ))	return false;
-	else if (deltaY > 0)
+	else if (deltaY < 0)
 	on_remote_2_L_ButtonClick()
-	else if (deltaY <= 0)
+	else if (deltaY >= 0)
 	on_remote_2_L_circle_ButtonClick()
 	return true;
 }
