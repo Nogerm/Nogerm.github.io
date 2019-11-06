@@ -242,9 +242,12 @@ VirtualJoystick.prototype._onMouseUp	= function(event)
 VirtualJoystick.prototype._onMouseDown	= function(event)
 {
 	event.preventDefault();
+	if(event.clientX >=480 && event.clientX<= 580 && event.clientY >=400 && event.clientY <=500)
+	{
 	var x	= event.clientX;
 	var y	= event.clientY;
 	return this._onDown(x, y);
+	}
 }
 
 VirtualJoystick.prototype._onMouseMove	= function(event)
