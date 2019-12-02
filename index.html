@@ -1521,36 +1521,53 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         textBox.value = final_transcript; // 顯示最終辨識文字
     if (interim_transcript.trim().length > 0) // 如果有中間辨識文字
         tempBox.value = interim_transcript; // 顯示中間辨識文字
-        if(textBox.value == "transformation" || textBox.value == "變形")
+        if(textBox.value == "transformation" || textBox.value == "變形" ||  textBox.value =="変形")
         {
           on_remote_func_2_ButtonClick();
           textBox.value =="";
         }
-        if(textBox.value == "forward" || textBox.value == "前進")
+        if(textBox.value == "forward" || textBox.value == "前進" ||  textBox.value =="まっすぐ" )
         {
           on_remote_fw_ButtonClick();
           textBox.value =="";
         }
-        if(textBox.value == "backward" || textBox.value == "後退")
+        if(textBox.value == "backward" || textBox.value == "後退" ||  textBox.value =="バックする" )
         {
           on_remote_bk_ButtonClick();
           textBox.value =="";
         }
+        if(textBox.value == "turn left" || textBox.value == "左轉" ||  textBox.value =="左折する" )
+        {
+          on_remote_2_L_circle_ButtonClick();
+          textBox.value =="";
+        }        
+        if(textBox.value == "turn right" || textBox.value == "右轉" ||  textBox.value =="右折する" )
+        {
+          on_remote_2_R_circle_ButtonClick();
+          textBox.value =="";
+        }               
   };
 }
 </script>   
 <br>
-最後結果：<input id="textBox" type="text" size="60" value="" style="height:30px;font-size:20px;"><br>
-中間結果：<input id="tempBox" type="text" size="60" value="" style="height:30px;font-size:20px;"><br><br>
+最後結果：<input id="textBox" type="text" size="60" value="" style="height:60px;font-size:40px;"><br><br>
+中間結果：<input id="tempBox" type="text" size="60" value="" style="height:60px;font-size:40px;"><br><br>
 辨識語言：
-<select id="langCombo" style="width:120px;height:40px;font-size:20px;">
+<select id="langCombo" style="width:240px;height:60px;font-size:40px;">
   <option value="en-US">英文(美國)</option>
   <option value="cmn-Hant-TW">中文(台灣)</option>
+  <option value="ja-JP">日本語</option>
 </select>
 <br>
 <br>
 <input onclick="startButton(event)" value="開始辨識" type="button" id="startStopButton" style="width:220px;height:100px;font-size:50px;">
 <br>
+<font size="4">
+  右折（うせつ）する██右轉 　　██ turn right<br> 
+  左折（させつ）する██左轉 　　██ turn right<br> 
+  まっすぐ　　　　　██直走 　　██ go ahead<br> 
+  バックする　　　　██後退 　　██ go back<br> 
+  変形(へんけい)　　██變形　　　██ transformation<br> </font>
 <label id="infoBox"></label>
     
 </div>
