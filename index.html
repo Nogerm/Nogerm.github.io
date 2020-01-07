@@ -1800,17 +1800,8 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
 
                
             });
-         }
- 
-         if (!('oncompassneedscalibration' in window)) {
-            document.getElementById('cnc-unsupported').classList.remove('hidden');
-         } else {
-            window.addEventListener('compassneedscalibration', function(event) {
-               alert('Compass needs calibrating! Wave your device in a figure-eight motion');
-            });
-         }
 
-         if( document.getElementById('rotation-rate-gamma').innerHTML.value >= 80)
+            if( document.getElementById('rotation-rate-gamma').innerHTML.value >= 80)
         {
           on_remote_2_L_circle_ButtonClick();  
         }        
@@ -1822,6 +1813,17 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         {
           on_remote_stop_ButtonClick();
         }
+         }
+ 
+         if (!('oncompassneedscalibration' in window)) {
+            document.getElementById('cnc-unsupported').classList.remove('hidden');
+         } else {
+            window.addEventListener('compassneedscalibration', function(event) {
+               alert('Compass needs calibrating! Wave your device in a figure-eight motion');
+            });
+         }
+
+
 
       </script>
    
