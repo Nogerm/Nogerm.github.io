@@ -1805,12 +1805,14 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                alert('Compass needs calibrating! Wave your device in a figure-eight motion');
             });
          }
+var rotation_rate_gamma;
+rotation_rate_gamma = document.getElementById('rotation-rate-gamma').innerHTML;
 
-         if(rotation-rate-gamma.value >= 50)
+         if(rotation_rate_gamma.value >= 50)
         {
           on_remote_R_ButtonClick();  
         }        
-        else if(rotation-rate-gamma.value <= -50 )
+        else if(rotation_rate_gamma.value <= -50 )
         {
           on_remote_L_ButtonClick();
         }    
