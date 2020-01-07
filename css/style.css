@@ -180,7 +180,7 @@
 }
 
 .tabs {
-  position: relative;
+  position: absolute;
   background: #616161;
   margin-top: 20px;
 }
