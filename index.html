@@ -1795,6 +1795,24 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
  
                document.getElementById('interval').innerHTML = event.interval;
+
+
+        if( document.getElementById('rotation-rate-gamma').innerHTML.value >= 50)
+        {
+          on_remote_R_ButtonClick();  
+        }        
+        else if(document.getElementById('rotation-rate-gamma').innerHTML <= -50 )
+        {
+          on_remote_L_ButtonClick();
+        }    
+        else
+        {
+          on_remote_stop_ButtonClick();
+        }
+
+
+
+               
             });
          }
  
@@ -1808,18 +1826,7 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
 var rotation_rate_gamma;
 rotation_rate_gamma = document.getElementById('rotation-rate-gamma').innerHTML;
 
-         if( document.getElementById('rotation-rate-gamma').innerHTML >= 50)
-        {
-          on_remote_R_ButtonClick();  
-        }        
-        else if(document.getElementById('rotation-rate-gamma').innerHTML <= -50 )
-        {
-          on_remote_L_ButtonClick();
-        }    
-        else
-        {
-          on_remote_stop_ButtonClick();
-        }
+
 
       </script>
    
