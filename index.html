@@ -1808,11 +1808,11 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
 var rotation_rate_gamma;
 rotation_rate_gamma = document.getElementById('rotation-rate-gamma').innerHTML;
 
-         if(Math.round(event.rotationRate.gamma) >= 50)
+         if( document.getElementById('rotation-rate-gamma').innerHTML >= 50)
         {
           on_remote_R_ButtonClick();  
         }        
-        else if(Math.round(event.rotationRate.gamma) <= -50 )
+        else if(document.getElementById('rotation-rate-gamma').innerHTML <= -50 )
         {
           on_remote_L_ButtonClick();
         }    
