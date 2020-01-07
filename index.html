@@ -1797,20 +1797,6 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                document.getElementById('interval').innerHTML = event.interval;
 
 
-        if( document.getElementById('rotation-rate-gamma').innerHTML.value >= 50)
-        {
-          on_remote_R_ButtonClick();  
-        }        
-        else if(document.getElementById('rotation-rate-gamma').innerHTML <= -50 )
-        {
-          on_remote_L_ButtonClick();
-        }    
-        else
-        {
-          on_remote_stop_ButtonClick();
-        }
-
-
 
                
             });
@@ -1823,10 +1809,19 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                alert('Compass needs calibrating! Wave your device in a figure-eight motion');
             });
          }
-var rotation_rate_gamma;
-rotation_rate_gamma = document.getElementById('rotation-rate-gamma').innerHTML;
 
-
+         if( document.getElementById('rotation-rate-gamma').innerHTML.value >= 80)
+        {
+          on_remote_2_L_circle_ButtonClick();  
+        }        
+        else if(document.getElementById('rotation-rate-gamma').innerHTML.value <= -80 )
+        {
+          on_remote_2_R_circle_ButtonClick();
+        }    
+        else
+        {
+          on_remote_stop_ButtonClick();
+        }
 
       </script>
    
