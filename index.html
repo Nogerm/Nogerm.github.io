@@ -1798,15 +1798,15 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
       {
         if( document.getElementById('rotation-rate-gamma').innerHTML >= 30)
         {
-          on_remote_2_L_circle_ButtonClick();  
+          on_remote_2_R_circle_ButtonClick();  
         }        
         else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 )
         {
-          on_remote_2_R_circle_ButtonClick();
+          on_remote_2_L_circle_ButtonClick();
         }    
         else
         {
-          //on_remote_stop_ButtonClick();
+          on_remote_2_stop_ButtonClick();
         }
       }
                document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
