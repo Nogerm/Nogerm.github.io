@@ -1747,12 +1747,7 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
             </p>
          </div>
       </div>
- 
-      <small class="author">
-         Demo created Demo created by <a href="http://www.audero.it">Aurelio De Rosa</a>
-         (<a href="https://twitter.com/AurelioDeRosa">@AurelioDeRosa</a>)
-      </small>
- 
+      <label><input type="checkbox" name="use_gesture" value="1">USE Gesture</label> 
       <script>
          if (!window.DeviceOrientationEvent) {
             document.getElementById('do-unsupported').classList.remove('hidden');
@@ -1793,7 +1788,7 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                document.getElementById('rotation-rate-beta').innerHTML = Math.round(event.rotationRate.beta);
                document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
        var test;              
-      test = document.getElementById("remote_speed_up_");
+      test = document.getElementById("use_gesture");
       if(test.value == 1 )
       {
 
@@ -1801,7 +1796,7 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         {
           on_remote_2_fw_ButtonClick();  
         }     
-        else if(document.getElementById('beta').innerHTML >= 60 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
+        else if(document.getElementById('beta').innerHTML >= 47 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
         {
           on_remote_2_bk_ButtonClick();  
         }        
@@ -1813,11 +1808,11 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         {
           on_remote_2_L_ButtonClick();
         }  
-        else if( document.getElementById('rotation-rate-gamma').innerHTML >= 30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 60)
+        else if( document.getElementById('rotation-rate-gamma').innerHTML >= 30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
         {
           on_remote_2_R_circle_ButtonClick();  
         }        
-        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 60)
+        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
         {
           on_remote_2_L_circle_ButtonClick();
         }    
