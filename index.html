@@ -1747,7 +1747,6 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
             </p>
          </div>
       </div>
-      <label><input type="checkbox" name="use_gesture" value="1">USE Gesture</label> 
 
       <script>
          if (!window.DeviceOrientationEvent) {
@@ -1792,7 +1791,7 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
 
        var test;     
     
-      test = document.getElementsByID("remote_speed_up_").value;
+      test = document.getElementById("remote_speed_up_").value;
       
       if(test == 1)
       {
