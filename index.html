@@ -1748,6 +1748,7 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
          </div>
       </div>
       <label><input type="checkbox" name="use_gesture" value="1">USE Gesture</label> 
+
       <script>
          if (!window.DeviceOrientationEvent) {
             document.getElementById('do-unsupported').classList.remove('hidden');
@@ -1787,10 +1788,15 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
  
                document.getElementById('rotation-rate-beta').innerHTML = Math.round(event.rotationRate.beta);
                document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
+
+
+        document.getElementsByName('use_gesture').addEventListener('click', function(){
+        console.log("checked")
+        });
        var test;              
-      test = document.getElementById("use_gesture").checked;
+      test = document.getElementsByName("use_gesture").value;
       
-      if(document.getElementById("use_gesture").checked)
+      if(document.getElementsByName("use_gesture").checked)
       {
 
         if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
