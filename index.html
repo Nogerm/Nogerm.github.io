@@ -1794,14 +1794,8 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
                document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
  
-               document.getElementById('interval').innerHTML = event.interval;          
-            });
-               
-               
 
-            
-         }
-         var test;              
+               var test;              
       test = document.getElementById("remote_speed_up_");
       if(test.value == 1 )
       {
@@ -1818,6 +1812,15 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
          // on_remote_stop_ButtonClick();
         }
       }
+      
+               document.getElementById('interval').innerHTML = event.interval;          
+            });
+               
+               
+
+            
+         }
+
          if (!('oncompassneedscalibration' in window)) {
             document.getElementById('cnc-unsupported').classList.remove('hidden');
          } else {
