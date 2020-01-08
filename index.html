@@ -1794,9 +1794,14 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
                document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
  
-               document.getElementById('interval').innerHTML = event.interval;
-
-         if( document.getElementById('rotation-rate-gamma').innerHTML >= 80)
+               document.getElementById('interval').innerHTML = event.interval;          
+               
+               
+      var timer = 0;
+      timer ++;
+      if(timer >=50)
+      {
+        if( document.getElementById('rotation-rate-gamma').innerHTML >= 80)
         {
           on_remote_2_L_circle_ButtonClick();  
         }        
@@ -1808,9 +1813,9 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         {
           on_remote_stop_ButtonClick();
         }
+      }
+      else{ timer = 0;}
 
-
-               
             });
 
             
