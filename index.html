@@ -1793,10 +1793,11 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         document.getElementsByName('use_gesture').addEventListener('click', function(){
         console.log("checked")
         });
-       var test;              
+       var test;     
+       boolean checked = use_gesture.getState();         
       test = document.getElementsByName("use_gesture").value;
       
-      if(document.getElementsByName("use_gesture").checked)
+      if(use_gesture.getState())
       {
 
         if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
