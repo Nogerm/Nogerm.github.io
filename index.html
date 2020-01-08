@@ -1796,11 +1796,28 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
       test = document.getElementById("remote_speed_up_");
       if(test.value == 1 )
       {
-        if( document.getElementById('rotation-rate-gamma').innerHTML >= 30)
+
+        if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
+        {
+          on_remote_2_fw_ButtonClick();  
+        }     
+        else if(document.getElementById('beta').innerHTML >= 60 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
+        {
+          on_remote_2_bk_ButtonClick();  
+        }        
+        else if( document.getElementById('rotation-rate-gamma').innerHTML >= 30 && document.getElementById('beta').innerHTML < -10)
+        {
+          on_remote_2_R_ButtonClick();  
+        }        
+        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 && document.getElementById('beta').innerHTML < -10)
+        {
+          on_remote_2_L_ButtonClick();
+        }  
+        else if( document.getElementById('rotation-rate-gamma').innerHTML >= 30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 60)
         {
           on_remote_2_R_circle_ButtonClick();  
         }        
-        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 )
+        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 60)
         {
           on_remote_2_L_circle_ButtonClick();
         }    
