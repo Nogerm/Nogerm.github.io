@@ -1797,7 +1797,10 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                document.getElementById('interval').innerHTML = event.interval;          
                
                
-
+               var test;
+      test = document.getElementById("remote_speed_up_");
+      if(test == 1 )
+      {
         if( document.getElementById('rotation-rate-gamma').innerHTML >= 80)
         {
           on_remote_2_L_circle_ButtonClick();  
@@ -1810,6 +1813,7 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         {
           on_remote_stop_ButtonClick();
         }
+      }
 
             });
 
