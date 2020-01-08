@@ -1788,8 +1788,9 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                document.getElementById('rotation-rate-beta').innerHTML = Math.round(event.rotationRate.beta);
                document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
        var test;              
-      test = document.getElementById("use_gesture");
-      if(test.value == 1 )
+      test = document.getElementById("use_gesture").checked;
+      
+      if(document.getElementById("use_gesture").checked)
       {
 
         if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
