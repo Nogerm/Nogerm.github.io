@@ -1790,14 +1790,11 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
                document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
 
 
-        document.getElementsByName('use_gesture').addEventListener('click', function(){
-        console.log("checked")
-        });
        var test;     
-       boolean checked = use_gesture.getState();         
-      test = document.getElementsByName("use_gesture").value;
+    
+      test = document.getElementsByID("remote_speed_up_").value;
       
-      if(use_gesture.getState())
+      if(test == 1)
       {
 
         if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
