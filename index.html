@@ -1795,7 +1795,7 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
       
       if(test == 1)
       {
-
+/*
         if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
         {
           on_remote_2_fw_ButtonClick();  
@@ -1820,6 +1820,31 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
         {
           on_remote_2_L_circle_ButtonClick();
         }    
+        */
+        if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
+        {
+          on_remote_2_fw_ButtonClick();  
+        }     
+        else if(document.getElementById('beta').innerHTML >= 47 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
+        {
+          on_remote_2_bk_ButtonClick();  
+        }        
+        else if( document.getElementById('gamma').innerHTML >= 35 && document.getElementById('beta').innerHTML < -10)
+        {
+          on_remote_2_L_ButtonClick();  
+        }        
+        else if(document.getElementById('gamma').innerHTM < -35 && document.getElementById('beta').innerHTML < -10)
+        {
+          on_remote_2_R_ButtonClick();
+        }  
+        else if(document.getElementById('gamma').innerHTML >= 35 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
+        {
+          on_remote_2_L_circle_ButtonClick();  
+        }        
+        else if(document.getElementById('gamma').innerHTM < -35 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
+        {
+          on_remote_2_R_circle_ButtonClick();
+        }
         else
         {
           on_remote_2_stop_ButtonClick();
