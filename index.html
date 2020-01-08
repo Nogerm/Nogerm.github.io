@@ -1799,17 +1799,17 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
       test = document.getElementById("remote_speed_up_");
       if(test.value == 1 )
       {
-        if( document.getElementById('rotation-rate-gamma').innerHTML >= 100)
+        if( document.getElementById('rotation-rate-gamma').innerHTML >= 30)
         {
           on_remote_2_L_circle_ButtonClick();  
         }        
-        else if(document.getElementById('rotation-rate-gamma').innerHTML < -100 )
+        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 )
         {
           on_remote_2_R_circle_ButtonClick();
         }    
         else
         {
-          on_remote_stop_ButtonClick();
+          //on_remote_stop_ButtonClick();
         }
       }
 
