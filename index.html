@@ -1792,14 +1792,11 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
  
                document.getElementById('rotation-rate-beta').innerHTML = Math.round(event.rotationRate.beta);
                document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
-               document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
- 
-
-               var test;              
+       var test;              
       test = document.getElementById("remote_speed_up_");
       if(test.value == 1 )
       {
-        if( document.getElementById('rotation-rate-gamma').value >= 30)
+        if( document.getElementById('rotation-rate-gamma').innerHTML >= 30)
         {
           on_remote_2_L_circle_ButtonClick();  
         }        
@@ -1812,6 +1809,10 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
           //on_remote_stop_ButtonClick();
         }
       }
+               document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
+ 
+
+
 
                document.getElementById('interval').innerHTML = event.interval;          
             });
