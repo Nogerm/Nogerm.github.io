@@ -605,7 +605,7 @@ function parseData(event) {
         newData.sw_rf = parseInt(data_array[17]);
         newData.sw_lb = parseInt(data_array[18]);
         newData.sw_rb = parseInt(data_array[19]);
-      } else if(selectedTab ==2) {
+      }} else if(selectedTab ==2) {
         let logData = getLogFromBytes(dataView);
         var str = '<ol type="1">'
 
@@ -616,7 +616,7 @@ function parseData(event) {
         str += '</ol>';
         document.getElementById("logListContainer").innerHTML = str;
       }
-    }
+    //}
   }
 }
 
