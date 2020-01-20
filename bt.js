@@ -308,6 +308,21 @@ function onReconnectButtonClick() {
   connect();
 }
 
+function onQueryLogButtonClick() {
+  let aBuffer_log = new ArrayBuffer(1);
+  let dataView_log = new DataView(aBuffer_log);
+  dataView_log.setUint8(0, QUERY_LOG_HEADER);
+
+  TXcharacteristic.writeValue(aBuffer_log)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
+}
+
+
 function on_remote_fw_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
