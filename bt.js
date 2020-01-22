@@ -1,4 +1,5 @@
 let bluetoothDevice = null;
+let bluetoothDevice2 = null;
 let RXcharacteristic = null;
 let TXcharacteristic = null;
 let queryTimer = null;
@@ -219,6 +220,30 @@ function onScanButtonClick() {
     });
 }
 
+function onScanButtonClick2() {
+  console.log('Requesting Bluetooth Device...');
+  navigator.bluetooth.requestDevice({
+      //acceptAllDevices: true,
+      filters: [{
+        name: device_name_filter
+      }],
+      optionalServices: [serviceUUID]
+    })
+    .then(device => {
+      console.log('> Name:             ' + device.name);
+      console.log('> Id:               ' + device.id);
+      console.log('> Connected:        ' + device.gatt.connected);
+
+      bluetoothDevice2 = device;
+      bluetoothDevice2.addEventListener('gattserverdisconnected', onDisconnected);
+      connect2();
+    })
+    .catch(error => {
+      console.log('requestDevice error: ' + error);
+    });
+}
+
+
 function connect() {
   document.getElementById("query_interval").disabled = true;
 
@@ -276,7 +301,7 @@ function connect2() {
   document.getElementById("query_interval").disabled = true;
 
   console.log('Connecting to Bluetooth Device...');
-  bluetoothDevice.gatt.connect2()
+  bluetoothDevice2.gatt.connect()
     .then(server => {
       console.log('> Bluetooth Device connected');
       console.log('>> Name:             ' + server.device.name);
@@ -360,16 +385,7 @@ function onReconnectButtonClick() {
   }
   connect();
 }
-function onReconnectButtonClick2() {
-  if (!bluetoothDevice) {
-    return;
-  }
-  if (bluetoothDevice.gatt.connected) {
-    console.log('> Bluetooth Device is already connected');
-    return;
-  }
-  connect2();
-}
+
 
 function onQueryLogButtonClick() {
   let aBuffer_log = new ArrayBuffer(1);
