@@ -1850,9 +1850,9 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
       }
       else
       {
-        if(selected == 0)
+        if(selected == 0 || selectedTab != 4 )
         { 
-        //on_remote_2_stop_ButtonClick();
+        on_remote_2_stop_ButtonClick();
         selected = 1; 
         }
       }
