@@ -270,6 +270,59 @@ function connect() {
     });;
 }
 
+
+
+function connect2() {
+  document.getElementById("query_interval").disabled = true;
+
+  console.log('Connecting to Bluetooth Device...');
+  bluetoothDevice.gatt.connect2()
+    .then(server => {
+      console.log('> Bluetooth Device connected');
+      console.log('>> Name:             ' + server.device.name);
+      console.log('>> Id:               ' + server.device.id);
+      console.log('>> Connected:        ' + server.device.gatt.connected);
+      console.log('>> Server connected: ' + server.connected);
+      return server.getPrimaryService(serviceUUID);
+    })
+    .then(service => {
+      console.log('>>> Service uuid:      ' + service.uuid);
+      console.log('>>> Service isPrimary: ' + service.isPrimary);
+      console.log('Service found, getting characteristic...');
+      return service.getCharacteristics();
+    })
+    .then(characteristics => {
+      console.log('characteristics found, getting characteristic...');
+      characteristics.forEach((characteristic, index) => {
+        console.log('>>>> Characteristics #' + (index + 1));
+        console.log('>>>> Characteristics uuid:  ' + characteristic.uuid);
+        console.log('>>>> Characteristics read:  ' + characteristic.properties.read);
+        console.log('>>>> Characteristics write: ' + characteristic.properties.write);
+      });
+      TXcharacteristic = characteristics[0];
+      RXcharacteristic = characteristics[1];
+
+      RXcharacteristic.startNotifications()
+        .then(() => {
+          document.getElementById("btn_scan").disabled       = true;
+          document.getElementById("btn_scan").style.backgroundColor       = HEX_COLOR_GRAY;
+          document.getElementById("btn_disconnect").disabled = false;
+          document.getElementById("btn_disconnect").style.backgroundColor = HEX_COLOR_RED;
+          document.getElementById("btn_reconnect").disabled  = true;
+          document.getElementById("btn_reconnect").style.backgroundColor  = HEX_COLOR_GRAY;
+
+          console.log('Notifications started');
+          RXcharacteristic.addEventListener('characteristicvaluechanged', parseData);
+
+          startQueryTimer();
+        });
+
+    })
+    .catch(error => {
+      console.log('connect error: ' + error);
+    });;
+}
+
 function onDisconnectButtonClick() {
   if (!bluetoothDevice) {
     return;
@@ -306,6 +359,16 @@ function onReconnectButtonClick() {
     return;
   }
   connect();
+}
+function onReconnectButtonClick2() {
+  if (!bluetoothDevice) {
+    return;
+  }
+  if (bluetoothDevice.gatt.connected) {
+    console.log('> Bluetooth Device is already connected');
+    return;
+  }
+  connect2();
 }
 
 function onQueryLogButtonClick() {
