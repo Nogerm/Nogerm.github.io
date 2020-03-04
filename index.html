@@ -23,10 +23,10 @@
       -webkit-user-select: none;
       -moz-user-select: none;
       position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  right: 0;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      right: 0;
     }
 
     #info {
@@ -79,42 +79,58 @@
         <label class="fonts">Data points: </label>
         <input id="data_points" type="text" onchange="setDataPointNum()" disabled="">
       </div>
-     <div class="labelContainer">
+      <div class="labelContainer">
         <label class="fonts">Speed Up+: </label>
         <input id="remote_speed_up_" type="text" onchange="setSpeedUpNum()" enabled="">
-      </div>
-      <select id="remote_speed_up" onchange="setSpeedUpNum()">
-        <option value="#">請選擇</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
+        <select id="remote_speed_up" onchange="setSpeedUpNum()">
+          <option value="#">請選擇</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
         </select>
+      </div>
+
 
       <div class="buttonContainer">
         <button id="btn_scan" class="button" onclick="onScanButtonClick()"
           style="background-color: rgb(102, 187, 106);">
-          <i class="material-icons iconfont">search</i> <a>Scan</a>
+          <i class="material-icons iconfont">search</i> <a>Scan#1</a>
         </button>
-        <button id="btn_scan_2" class="button_2" onclick="onScanButtonClick2()"
-        style="background-color: rgb(218, 231, 35);">
-        <i class="material-icons iconfont">search</i> <a>Scan</a>
-      </button>
+        <!-- <button id="btn_scan_2" class="button_2" onclick="onScanButtonClick2()"
+          style="background-color: rgb(218, 231, 35);">
+          <i class="material-icons iconfont">search</i> <a>Scan#2</a>
+        </button> -->
+      </div>
+      <div class="buttonContainer">
         <button id="btn_disconnect" class="button" onclick="onDisconnectButtonClick()"
           style="background-color: rgb(224, 224, 224);">
-          <i class="material-icons iconfont">close</i> Disconnect
+          <i class="material-icons iconfont">close</i> Disconnect#1
         </button>
+        <!-- <button id="btn_disconnect_2" class="button" onclick="onDisconnectButtonClick2()"
+          style="background-color: rgb(173, 222, 245);">
+          <i class="material-icons iconfont">close</i> Disconnect#2
+        </button> -->
         <button id="btn_reconnect" class="button" onclick="onReconnectButtonClick()"
           style="background-color: rgb(224, 224, 224);" disabled="">
           <i class="material-icons iconfont">autorenew</i> Reconnect
         </button>
       </div>
+
+      <br>
+      <label>Select Device:</label>
+      <label><input type="radio" name="device_select" value="1" onchange="getCheckboxValue(this)" checked>Device
+        1</label>
+      <!-- <label><input type="radio" name="device_select" value="0" onchange="getCheckboxValue(this)" >Both</label> -->
+      <!-- 預設選項 -->
+      <!-- <label><input type="radio" name="device_select" value="2" onchange="getCheckboxValue(this)">Device 2</label> -->
     </div>
+  </div>
   </div>
 
 
@@ -426,6 +442,10 @@
             <div class="fonts" style="position: absolute;left: 200px;top: 130px;font-size: 24px;">
               <label>Factor Minus:</label>
               <label id="label-factor-minus">0</label>
+            </div>
+            <div class="fonts" style="position: absolute;left: 200px;top: 170px;font-size: 24px;">
+              <label>IR distance:</label>
+              <label id="label-IR-FY">0</label>
             </div>
           </div>
         </div>
@@ -1384,21 +1404,52 @@
       <div class="tab-content"> Remote control
 
         <br>
-        <div class="button_2">
-          <button id="btn_remote_forward" class="button" onclick="on_remote_fw_ButtonClick()">Forward</button>
-        </div>
+        <table style="width:100%">
+          <tbody>
+            <tr>
+              <th>bnk</th>
+              <th>
+                <div class="button_2">
+                  <button id="btn_remote_forward" class="button" onclick="on_remote_fw_ButtonClick()">▲Forward▲</button>
+                </div>
+              </th>
+              <th></th>
+            </tr>
+          </tbody>
+        </table>
+
+
         <div class="buttonContainer">
-          <button id="btn_remote_left" class="button" onclick="on_remote_L_ButtonClick()">Left</button>
-          <button id="btn_remote_stop" class="button" onclick="on_remote_stop_ButtonClick()">Stop</button>
-          <button id="btn_remote_right" class="button" onclick="on_remote_R_ButtonClick()">Right</button>
+          <button id="btn_remote_left" class="button" onclick="on_remote_L_ButtonClick()">◀Left</button>
+          <button id="btn_remote_stop" class="button" onclick="on_remote_stop_ButtonClick()">▉Stop</button>
+          <button id="btn_remote_right" class="button" onclick="on_remote_R_ButtonClick()">Right▶</button>
         </div>
-        <div class="button_2">
-          <button id="btn_remote_backward" class="button" onclick="on_remote_bk_ButtonClick()">Backward</button>
-        </div>
+
+        <table style="width:100%">
+          <tbody border:="">
+            <tr>
+              <th>bnk</th>
+              <th>
+                <div class="button_2">
+                  <button id="btn_remote_backward" class="button" onclick="on_remote_bk_ButtonClick()">▼Backward▼</button>
+                </div>
+              </th>
+              <th></th>
+            </tr>
+          </tbody>
+        </table>
+
         <div class="buttonContainer">
           <button id="btn_func_1" class="button" onclick="on_remote_Demo_ButtonClick()">Demo</button>
           <button id="btn_func_2" class="button" onclick="on_remote_func_2_ButtonClick()">Transformation</button>
         </div>
+        <br>
+        <label>Select IR distance:</label>
+        <label><input type="radio" name="IR_dist_select" value="1" onchange="get_IR_CheckboxValue(this)">1</label>
+        <label><input type="radio" name="IR_dist_select" value="2" onchange="get_IR_CheckboxValue(this)"
+            checked>2</label> <!-- 預設選項 -->
+        <label><input type="radio" name="IR_dist_select" value="3" onchange="get_IR_CheckboxValue(this)">3</label>
+        <br><br>
       </div>
     </div>
 
@@ -1423,7 +1474,7 @@
           <canvas width="86" height="86" style="position: fixed; left: 460px; top: 351px; display: none;"></canvas>
         </div>
         <div id="info">
-            <img src="./joystick_XY.jpg" width="500" height="500">
+          <img src="./joystick_XY.jpg" width="500" height="500">
           <br>
           <span id="result"><b>Result:</b> dx:0 dy:0</span>
 
@@ -1459,7 +1510,7 @@
 
         <br>
       </div>
-      
+
     </div>
     <div class="tab">
       <input type="radio" name="cssTabs" value="5" id="tab-5" class="tab-switch" onchange="radioChange(this)">
@@ -1467,179 +1518,201 @@
         <i class="material-icons spaceRight">videogame_asset</i>Voice Control</label>
       <div class="tab-content">
 
-    <script type="text/javascript">
-var infoBox; // 訊息 label
-var textBox; // 最終的辨識訊息 text input
-var tempBox; // 中間的辨識訊息 text input
-var startStopButton; // 「辨識/停止」按鈕
-var final_transcript = ''; // 最終的辨識訊息的變數
-var recognizing = false; // 是否辨識中
+        <script type="text/javascript">
+          var infoBox; // 訊息 label
+          var textBox; // 最終的辨識訊息 text input
+          var tempBox; // 中間的辨識訊息 text input
+          var startStopButton; // 「辨識/停止」按鈕
+          var final_transcript = ''; // 最終的辨識訊息的變數
+          var recognizing = false; // 是否辨識中
 
-function startButton(event) {
-  infoBox = document.getElementById("infoBox"); // 取得訊息控制項 infoBox
-  textBox = document.getElementById("textBox"); // 取得最終的辨識訊息控制項 textBox
-  tempBox = document.getElementById("tempBox"); // 取得中間的辨識訊息控制項 tempBox
-  startStopButton = document.getElementById("startStopButton"); // 取得「辨識/停止」這個按鈕控制項
-  langCombo = document.getElementById("langCombo"); // 取得「辨識語言」這個選擇控制項
-  if (recognizing) { // 如果正在辨識，則停止。
-    recognition.stop();
-  } else { // 否則就開始辨識
-    textBox.value = ''; // 清除最終的辨識訊息
-    tempBox.value = ''; // 清除中間的辨識訊息
-    final_transcript = ''; // 最終的辨識訊息變數
-    recognition.lang = langCombo.value; // 設定辨識語言
-    recognition.start(); // 開始辨識
-  }
-}
+          function startButton(event) {
+            infoBox = document.getElementById("infoBox"); // 取得訊息控制項 infoBox
+            textBox = document.getElementById("textBox"); // 取得最終的辨識訊息控制項 textBox
+            tempBox = document.getElementById("tempBox"); // 取得中間的辨識訊息控制項 tempBox
+            startStopButton = document.getElementById("startStopButton"); // 取得「辨識/停止」這個按鈕控制項
+            langCombo = document.getElementById("langCombo"); // 取得「辨識語言」這個選擇控制項
+            if (recognizing) { // 如果正在辨識，則停止。
+              recognition.stop();
+            } else { // 否則就開始辨識
+              textBox.value = ''; // 清除最終的辨識訊息
+              tempBox.value = ''; // 清除中間的辨識訊息
+              final_transcript = ''; // 最終的辨識訊息變數
+              recognition.lang = langCombo.value; // 設定辨識語言
+              recognition.start(); // 開始辨識
+            }
+          }
 
-if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitSpeechRecognition 這個屬性
-  // 就是不支援語音辨識，要求使用者更新瀏覽器。 
-  infoBox.innerText = "本瀏覽器不支援語音辨識，請更換瀏覽器！(Chrome 25 版以上才支援語音辨識)";
-} else {
-  var recognition = new webkitSpeechRecognition(); // 建立語音辨識物件 webkitSpeechRecognition
-  recognition.continuous = true; // 設定連續辨識模式
-  recognition.interimResults = true; // 設定輸出中先結果。
+          if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitSpeechRecognition 這個屬性
+            // 就是不支援語音辨識，要求使用者更新瀏覽器。 
+            infoBox.innerText = "本瀏覽器不支援語音辨識，請更換瀏覽器！(Chrome 25 版以上才支援語音辨識)";
+          } else {
+            var recognition = new webkitSpeechRecognition(); // 建立語音辨識物件 webkitSpeechRecognition
+            recognition.continuous = true; // 設定連續辨識模式
+            recognition.interimResults = true; // 設定輸出中先結果。
 
-  recognition.onstart = function() { // 開始辨識
-    recognizing = true; // 設定為辨識中
-    startStopButton.value = "按此停止"; // 辨識中...按鈕改為「按此停止」。  
-    infoBox.innerText = "辨識中...";  // 顯示訊息為「辨識中」...
-  };
+            recognition.onstart = function () { // 開始辨識
+              recognizing = true; // 設定為辨識中
+              startStopButton.value = "按此停止"; // 辨識中...按鈕改為「按此停止」。  
+              infoBox.innerText = "辨識中...";  // 顯示訊息為「辨識中」...
+            };
 
-  recognition.onend = function() { // 辨識完成
-    recognizing = false; // 設定為「非辨識中」
-    startStopButton.value = "開始辨識";  // 辨識完成...按鈕改為「開始辨識」。
-    infoBox.innerText = ""; // 不顯示訊息
-  };
+            recognition.onend = function () { // 辨識完成
+              recognizing = false; // 設定為「非辨識中」
+              startStopButton.value = "開始辨識";  // 辨識完成...按鈕改為「開始辨識」。
+              infoBox.innerText = ""; // 不顯示訊息
+            };
 
-  recognition.onresult = function(event) { // 辨識有任何結果時
-    var interim_transcript = ''; // 中間結果
-    for (var i = event.resultIndex; i < event.results.length; ++i) { // 對於每一個辨識結果
-      if (event.results[i].isFinal) { // 如果是最終結果
-        final_transcript += event.results[i][0].transcript; // 將其加入最終結果中
-      } else { // 否則
-        interim_transcript += event.results[i][0].transcript; // 將其加入中間結果中
-      }
-    }
-    if (final_transcript.trim().length > 0) // 如果有最終辨識文字
-        textBox.value = final_transcript; // 顯示最終辨識文字
-    if (interim_transcript.trim().length > 0) // 如果有中間辨識文字
-        tempBox.value = interim_transcript; // 顯示中間辨識文字
-        if(textBox.value == "transformation" || textBox.value == "變形" ||  textBox.value =="変形")
-        {
-          on_remote_func_2_ButtonClick();
-          textBox.value =="";
-        }
-        if(textBox.value == "forward" || textBox.value == "前進" ||  textBox.value =="まっすぐ" )
-        {
-          on_remote_fw_ButtonClick();
-          textBox.value =="";
-        }
-        if(textBox.value == "backward" || textBox.value == "後退" ||  textBox.value =="バックする" )
-        {
-          on_remote_bk_ButtonClick();
-          textBox.value =="";
-        }
-        if(textBox.value == "turn left" || textBox.value == "左轉" ||  textBox.value =="左折する" )
-        {
-          on_remote_L_ButtonClick();
-          textBox.value =="";
-        }        
-        if(textBox.value == "turn right" || textBox.value == "右轉" ||  textBox.value =="右折する" )
-        {
-          on_remote_R_ButtonClick();
-          textBox.value =="";
-        }               
-  };
-}
-</script>   
-<br>
-最後結果：<input id="textBox" type="text" size="60" value="" style="height:60px;font-size:40px;"><br><br>
-中間結果：<input id="tempBox" type="text" size="60" value="" style="height:60px;font-size:40px;"><br><br>
-辨識語言：
-<select id="langCombo" style="width:240px;height:60px;font-size:40px;">
-  <option value="en-US">英文(美國)</option>
-  <option value="cmn-Hant-TW">中文(台灣)</option>
-  <option value="ja-JP">日本語</option>
-</select>
-<br>
-<br>
-<input onclick="startButton(event)" value="開始辨識" type="button" id="startStopButton" style="width:220px;height:100px;font-size:50px;">
-<br>
+            recognition.onresult = function (event) { // 辨識有任何結果時
+              var interim_transcript = ''; // 中間結果
+              for (var i = event.resultIndex; i < event.results.length; ++i) { // 對於每一個辨識結果
+                if (event.results[i].isFinal) { // 如果是最終結果
+                  final_transcript += event.results[i][0].transcript; // 將其加入最終結果中
+                } else { // 否則
+                  interim_transcript += event.results[i][0].transcript; // 將其加入中間結果中
+                }
+              }
+              if (final_transcript.trim().length > 0) // 如果有最終辨識文字
+                textBox.value = final_transcript; // 顯示最終辨識文字
+              if (interim_transcript.trim().length > 0) // 如果有中間辨識文字
+                tempBox.value = interim_transcript; // 顯示中間辨識文字
+              if (textBox.value == "transformation" || textBox.value == "變形" || textBox.value == "変形") {
+                on_remote_func_2_ButtonClick();
+                textBox.value == "";
+              }
+              if (textBox.value == "forward" || textBox.value == "前進" || textBox.value == "まっすぐ") {
+                on_remote_fw_ButtonClick();
+                textBox.value == "";
+              }
+              if (textBox.value == "backward" || textBox.value == "後退" || textBox.value == "バックする") {
+                on_remote_bk_ButtonClick();
+                textBox.value == "";
+              }
+              if (textBox.value == "turn left" || textBox.value == "左轉" || textBox.value == "左折する") {
+                on_remote_L_ButtonClick();
+                textBox.value == "";
+              }
+              if (textBox.value == "turn right" || textBox.value == "右轉" || textBox.value == "右折する") {
+                on_remote_R_ButtonClick();
+                textBox.value == "";
+              }
+            };
+          }
+        </script>
+        <br>
+        最後結果：<input id="textBox" type="text" size="60" value="" style="height:60px;font-size:40px;"><br><br>
+        中間結果：<input id="tempBox" type="text" size="60" value="" style="height:60px;font-size:40px;"><br><br>
+        辨識語言：
+        <select id="langCombo" style="width:240px;height:60px;font-size:40px;">
+          <option value="cmn-Hant-TW">中文(台灣)</option>
+          <option value="en-US">英文(美國)</option>
+          <option value="ja-JP">日本語</option>
+        </select>
+        <br>
+        <br>
+        <input onclick="startButton(event)" value="開始辨識" type="button" id="startStopButton"
+          style="width:220px;height:100px;font-size:50px;">
+        <br>
 
-<table width="600" border="1" >
-  
-    　<tr>
-    　<td><font size="6" color="#BFFFFF">右折（うせつ）する</font></td>
-    　<td><font size="6" color="#BFFFFF">右轉</font></td>
-    　<td><font size="6" color="#BFFFFF">turn right</font></td>
-    　</tr>
-    　<td><font size="6" color="#BFFFFF">左折（させつ）する</font></td>
-    　<td><font size="6" color="#BFFFFF">左轉</font></td>
-    　<td><font size="6" color="#BFFFFF">turn right</font></td>
-    　</tr>
-      <tr>
-    　<td><font size="6" color="#BFFFFF">まっすぐ</font></td>
-    　<td><font size="6" color="#BFFFFF">直走</font></td>
-    　<td><font size="6" color="#BFFFFF">go ahead</font></td>
-    　</tr>
-      <tr>
-    　<td><font size="6" color="#BFFFFF">バックする</font></td>
-    　<td><font size="6" color="#BFFFFF">後退</font></td>
-    　<td><font size="6" color="#BFFFFF">go back</font></td>
-    　</tr>
-      <tr>
-    　<td><font size="6" color="#BFFFFF">変形(へんけい)</font></td>
-    　<td><font size="6" color="#BFFFFF">變形</font></td>
-    　<td><font size="6" color="#BFFFFF">transformation</font></td>
-      　</tr>
-</table>
-<label id="infoBox"></label>
-    
-</div>
+        <table width="600" border="1">
+
+          　<tr>
+            　<td>
+              <font size="6" color="#BFFFFF">右折（うせつ）する</font>
+            </td>
+            　<td>
+              <font size="6" color="#BFFFFF">右轉</font>
+            </td>
+            　<td>
+              <font size="6" color="#BFFFFF">turn right</font>
+            </td>
+            　</tr>
+          　<td>
+            <font size="6" color="#BFFFFF">左折（させつ）する</font>
+          </td>
+          　<td>
+            <font size="6" color="#BFFFFF">左轉</font>
+          </td>
+          　<td>
+            <font size="6" color="#BFFFFF">turn right</font>
+          </td>
+          　</tr>
+          <tr>
+            　<td>
+              <font size="6" color="#BFFFFF">まっすぐ</font>
+            </td>
+            　<td>
+              <font size="6" color="#BFFFFF">直走</font>
+            </td>
+            　<td>
+              <font size="6" color="#BFFFFF">go ahead</font>
+            </td>
+            　</tr>
+          <tr>
+            　<td>
+              <font size="6" color="#BFFFFF">バックする</font>
+            </td>
+            　<td>
+              <font size="6" color="#BFFFFF">後退</font>
+            </td>
+            　<td>
+              <font size="6" color="#BFFFFF">go back</font>
+            </td>
+            　</tr>
+          <tr>
+            　<td>
+              <font size="6" color="#BFFFFF">変形(へんけい)</font>
+            </td>
+            　<td>
+              <font size="6" color="#BFFFFF">變形</font>
+            </td>
+            　<td>
+              <font size="6" color="#BFFFFF">transformation</font>
+            </td>
+            　</tr>
+        </table>
+        <label id="infoBox"></label>
+
+      </div>
     </div>
 
 
 
-    <div class="tab">
+
+    <!-- <div class="tab">
       <input type="radio" name="cssTabs" value="6" id="tab-6" class="tab-switch" onchange="radioChange(this)">
       <label for="tab-6" class="tab-label">
         <i class="material-icons spaceRight">videogame_asset</i>Gesture</label>
       <div class="tab-content">
 
-  
-      <style>
-         *
-         {
+
+        <style>
+          * {
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
-         }
- 
+          }
 
- 
-         h1
-         {
+
+
+          h1 {
             text-align: center;
-         }
- 
-         .hidden
-         {
+          }
+
+          .hidden {
             display: none;
-         }
- 
-         .cube
-         {
+          }
+
+          .cube {
             width: 150px;
             height: 150px;
             position: relative;
             margin: 30px auto;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-         }
- 
-         .face
-         {
+          }
+
+          .face {
             width: 150px;
             height: 150px;
             position: absolute;
@@ -1649,244 +1722,226 @@ if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitS
             background-color: #999999;
             box-shadow: inset 0 0 20px #333333;
             opacity: 0.6;
-         }
- 
-         .cube .one
-         {
+          }
+
+          .cube .one {
             -webkit-transform: translateZ(75px);
             transform: translateZ(75px);
-         }
- 
-         .cube .two
-         {
+          }
+
+          .cube .two {
             -webkit-transform: rotateY(90deg) translateZ(75px);
             transform: rotateY(90deg) translateZ(75px);
-         }
- 
-         .cube .three
-         {
+          }
+
+          .cube .three {
             -webkit-transform: rotateY(180deg) translateZ(75px);
             transform: rotateY(180deg) translateZ(75px);
-         }
- 
-         .cube .four
-         {
+          }
+
+          .cube .four {
             -webkit-transform: rotateY(-90deg) translateZ(75px);
             transform: rotateY(-90deg) translateZ(75px);
-         }
- 
-         .cube .five
-         {
+          }
+
+          .cube .five {
             -webkit-transform: rotateX(90deg) translateZ(75px);
             transform: rotateX(90deg) translateZ(75px);
-         }
- 
-         .cube .six
-         {
+          }
+
+          .cube .six {
             -webkit-transform: rotateX(-90deg) translateZ(75px) rotate(0deg);
             transform: rotateX(-90deg) translateZ(75px) rotate(0deg);
-         }
- 
-         .value
-         {
+          }
+
+          .value {
             font-weight: bold;
-         }
- 
- 
-         .author
-         {
+          }
+
+
+          .author {
             display: block;
             margin-top: 1em;
-         }
-      </style>
-   
-   
-      <h1>Device Orientation API</h1>
-      <span id="do-unsupported" class="hidden">deviceorientation event not supported</span>
-      <span id="dm-unsupported" class="hidden">devicemotion event not supported</span>
-      <span id="cnc-unsupported" class="">compassneedscalibration event not supported</span>
- 
-      <div id="do-results">
-         <div id="cube" class="cube">
+          }
+        </style>
+
+
+        <h1>Device Orientation API</h1>
+        <span id="do-unsupported" class="hidden">deviceorientation event not supported</span>
+        <span id="dm-unsupported" class="hidden">devicemotion event not supported</span>
+        <span id="cnc-unsupported" class="">compassneedscalibration event not supported</span>
+
+        <div id="do-results">
+          <div id="cube" class="cube">
             <div class="face one">1</div>
             <div class="face two">2</div>
             <div class="face three">3</div>
             <div class="face four">4</div>
             <div class="face five">5</div>
             <div class="face six">6</div>
-         </div>
-         <div id="do-info" class="">
+          </div>
+          <div id="do-info" class="">
             <p>
-               Coordinates:
-               (<span id="beta" class="value">0</span>,
-               <span id="gamma" class="value">0</span>,
-               <span id="alpha" class="value">0</span>)
-               <br>
-               Position absolute? <span id="is-absolute" class="value">false</span>
+              Coordinates:
+              (<span id="beta" class="value">0</span>,
+              <span id="gamma" class="value">0</span>,
+              <span id="alpha" class="value">0</span>)
+              <br>
+              Position absolute? <span id="is-absolute" class="value">false</span>
             </p>
-         </div>
-         <div id="dm-info" class="">
+          </div>
+          <div id="dm-info" class="">
             <p>
-               Acceleration:
-               (<span id="acceleration-x" class="value">0</span>,
-               <span id="acceleration-y" class="value">0</span>,
-               <span id="acceleration-z" class="value">0</span>)
-               m/s<sup>2</sup>
-            </p>
-            <p>
-               Acceleration including gravity:
-               (<span id="acceleration-including-gravity-x" class="value">0</span>,
-               <span id="acceleration-including-gravity-y" class="value">0</span>,
-               <span id="acceleration-including-gravity-z" class="value">0</span>)
-               m/s<sup>2</sup>
+              Acceleration:
+              (<span id="acceleration-x" class="value">0</span>,
+              <span id="acceleration-y" class="value">0</span>,
+              <span id="acceleration-z" class="value">0</span>)
+              m/s<sup>2</sup>
             </p>
             <p>
-               Rotation rate:
-               (<span id="rotation-rate-beta" class="value">0</span>,
-               <span id="rotation-rate-gamma" class="value">0</span>,
-               <span id="rotation-rate-alpha" class="value">0</span>)
+              Acceleration including gravity:
+              (<span id="acceleration-including-gravity-x" class="value">0</span>,
+              <span id="acceleration-including-gravity-y" class="value">0</span>,
+              <span id="acceleration-including-gravity-z" class="value">0</span>)
+              m/s<sup>2</sup>
             </p>
             <p>
-               Interval: <span id="interval" class="value">16</span> milliseconds
+              Rotation rate:
+              (<span id="rotation-rate-beta" class="value">0</span>,
+              <span id="rotation-rate-gamma" class="value">0</span>,
+              <span id="rotation-rate-alpha" class="value">0</span>)
             </p>
-         </div>
-      </div>
+            <p>
+              Interval: <span id="interval" class="value">16</span> milliseconds
+            </p>
+          </div>
+        </div>
 
-      <script>
-         if (!window.DeviceOrientationEvent) {
+        <script>
+          if (!window.DeviceOrientationEvent) {
             document.getElementById('do-unsupported').classList.remove('hidden');
-         } else {
+          } else {
             document.getElementById('do-info').classList.remove('hidden');
- 
-            window.addEventListener('deviceorientation', function(event) {
-               document.getElementById('cube').style.webkitTransform =
-               document.getElementById('cube').style.transform =
-                       'rotateX(' + event.beta + 'deg) ' +
-                       'rotateY(' + event.gamma + 'deg) ' +
-                       'rotateZ(' + event.alpha + 'deg)';
- 
-               document.getElementById('beta').innerHTML = Math.round(event.beta);
-               document.getElementById('gamma').innerHTML = Math.round(event.gamma);
-               document.getElementById('alpha').innerHTML = Math.round(event.alpha);
-               document.getElementById('is-absolute').innerHTML = event.absolute ? "true" : "false";
+
+            window.addEventListener('deviceorientation', function (event) {
+              document.getElementById('cube').style.webkitTransform =
+                document.getElementById('cube').style.transform =
+                'rotateX(' + event.beta + 'deg) ' +
+                'rotateY(' + event.gamma + 'deg) ' +
+                'rotateZ(' + event.alpha + 'deg)';
+
+              document.getElementById('beta').innerHTML = Math.round(event.beta);
+              document.getElementById('gamma').innerHTML = Math.round(event.gamma);
+              document.getElementById('alpha').innerHTML = Math.round(event.alpha);
+              document.getElementById('is-absolute').innerHTML = event.absolute ? "true" : "false";
             });
-         }
- 
-         if (!window.DeviceMotionEvent) {
+          }
+
+          if (!window.DeviceMotionEvent) {
             document.getElementById('dm-unsupported').classList.remove('hidden');
-         } else {
+          } else {
             document.getElementById('dm-info').classList.remove('hidden');
- 
-            window.addEventListener('devicemotion', function(event) {
-               document.getElementById('acceleration-x').innerHTML = Math.round(event.acceleration.x);
-               document.getElementById('acceleration-y').innerHTML = Math.round(event.acceleration.y);
-               document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
- 
-               document.getElementById('acceleration-including-gravity-x').innerHTML =
-                       Math.round(event.accelerationIncludingGravity.x);
-               document.getElementById('acceleration-including-gravity-y').innerHTML =
-                       Math.round(event.accelerationIncludingGravity.y);
-               document.getElementById('acceleration-including-gravity-z').innerHTML =
-                       Math.round(event.accelerationIncludingGravity.z);
- 
-               document.getElementById('rotation-rate-beta').innerHTML = Math.round(event.rotationRate.beta);
-               document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
+
+            window.addEventListener('devicemotion', function (event) {
+              document.getElementById('acceleration-x').innerHTML = Math.round(event.acceleration.x);
+              document.getElementById('acceleration-y').innerHTML = Math.round(event.acceleration.y);
+              document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
+
+              document.getElementById('acceleration-including-gravity-x').innerHTML =
+                Math.round(event.accelerationIncludingGravity.x);
+              document.getElementById('acceleration-including-gravity-y').innerHTML =
+                Math.round(event.accelerationIncludingGravity.y);
+              document.getElementById('acceleration-including-gravity-z').innerHTML =
+                Math.round(event.accelerationIncludingGravity.z);
+
+              document.getElementById('rotation-rate-beta').innerHTML = Math.round(event.rotationRate.beta);
+              document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
 
 
-       var selected;     
-      if(selectedTab == 6)
-      {
-        selected = 0; 
-/*
-        if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
-        {
-          on_remote_2_fw_ButtonClick();  
-        }     
-        else if(document.getElementById('beta').innerHTML >= 47 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
-        {
-          on_remote_2_bk_ButtonClick();  
-        }        
-        else if( document.getElementById('rotation-rate-gamma').innerHTML >= 30 && document.getElementById('beta').innerHTML < -10)
-        {
-          on_remote_2_R_ButtonClick();  
-        }        
-        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 && document.getElementById('beta').innerHTML < -10)
-        {
-          on_remote_2_L_ButtonClick();
-        }  
-        else if( document.getElementById('rotation-rate-gamma').innerHTML >= 30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
-        {
-          on_remote_2_R_circle_ButtonClick();  
-        }        
-        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
-        {
-          on_remote_2_L_circle_ButtonClick();
-        }    
-        */
-        if(document.getElementById('beta').innerHTML < -10 && document.getElementById('gamma').innerHTML < 35 && document.getElementById('gamma').innerHTML > -35)
-        {
-          on_remote_2_fw_ButtonClick();  
-        }     
-        else if(document.getElementById('beta').innerHTML >= 47 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
-        {
-          on_remote_2_bk_ButtonClick();  
-        }        
-        else if( document.getElementById('gamma').innerHTML >= 35 && document.getElementById('beta').innerHTML < -10)
-        {
-          on_remote_2_R_ButtonClick();  
-        }        
-        else if(document.getElementById('gamma').innerHTML < -35 && document.getElementById('beta').innerHTML < -10)
-        {
-          on_remote_2_L_ButtonClick();
-        }  
-        else if(document.getElementById('gamma').innerHTML >= 35 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
-        {
-          on_remote_2_R_circle_ButtonClick();  
-        }        
-        else if(document.getElementById('gamma').innerHTML < -35 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
-        {
-          on_remote_2_L_circle_ButtonClick();
-        }
-        else
-        {
-          on_remote_2_stop_ButtonClick();
-        }
-      }
-      else
-      {
-        if(selected == 0 && selectedTab != 4 )
-        { 
-        on_remote_2_stop_ButtonClick();
-        selected = 1; 
-        }
-      }
-               document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
- 
+              var selected;
+              if (selectedTab == 6) {
+                selected = 0;
+                /*
+                        if(document.getElementById('beta').innerHTML < -10 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
+                        {
+                          on_remote_2_fw_ButtonClick();  
+                        }     
+                        else if(document.getElementById('beta').innerHTML >= 47 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30)
+                        {
+                          on_remote_2_bk_ButtonClick();  
+                        }        
+                        else if( document.getElementById('rotation-rate-gamma').innerHTML >= 30 && document.getElementById('beta').innerHTML < -10)
+                        {
+                          on_remote_2_R_ButtonClick();  
+                        }        
+                        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 && document.getElementById('beta').innerHTML < -10)
+                        {
+                          on_remote_2_L_ButtonClick();
+                        }  
+                        else if( document.getElementById('rotation-rate-gamma').innerHTML >= 30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
+                        {
+                          on_remote_2_R_circle_ButtonClick();  
+                        }        
+                        else if(document.getElementById('rotation-rate-gamma').innerHTML < -30 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47)
+                        {
+                          on_remote_2_L_circle_ButtonClick();
+                        }    
+                        */
+                if (document.getElementById('beta').innerHTML < -10 && document.getElementById('gamma').innerHTML < 35 && document.getElementById('gamma').innerHTML > -35) {
+                  on_remote_2_fw_ButtonClick();
+                }
+                else if (document.getElementById('beta').innerHTML >= 47 && document.getElementById('rotation-rate-gamma').innerHTML < 30 && document.getElementById('rotation-rate-gamma').innerHTML > -30) {
+                  on_remote_2_bk_ButtonClick();
+                }
+                else if (document.getElementById('gamma').innerHTML >= 35 && document.getElementById('beta').innerHTML < -10) {
+                  on_remote_2_R_ButtonClick();
+                }
+                else if (document.getElementById('gamma').innerHTML < -35 && document.getElementById('beta').innerHTML < -10) {
+                  on_remote_2_L_ButtonClick();
+                }
+                else if (document.getElementById('gamma').innerHTML >= 35 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47) {
+                  on_remote_2_R_circle_ButtonClick();
+                }
+                else if (document.getElementById('gamma').innerHTML < -35 && document.getElementById('beta').innerHTML > -10 && document.getElementById('beta').innerHTML < 47) {
+                  on_remote_2_L_circle_ButtonClick();
+                }
+                else {
+                  on_remote_2_stop_ButtonClick();
+                }
+              }
+              else {
+                if (selected == 0 && selectedTab != 4) {
+                  on_remote_2_stop_ButtonClick();
+                  selected = 1;
+                }
+              }
+              document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
 
 
 
-               document.getElementById('interval').innerHTML = event.interval;          
+
+              document.getElementById('interval').innerHTML = event.interval;
             });
-               
-               
 
-            
-         }
 
-         if (!('oncompassneedscalibration' in window)) {
+
+
+          }
+
+          if (!('oncompassneedscalibration' in window)) {
             document.getElementById('cnc-unsupported').classList.remove('hidden');
-         } else {
-            window.addEventListener('compassneedscalibration', function(event) {
-               alert('Compass needs calibrating! Wave your device in a figure-eight motion');
+          } else {
+            window.addEventListener('compassneedscalibration', function (event) {
+              alert('Compass needs calibrating! Wave your device in a figure-eight motion');
             });
-         }
+          }
 
 
 
-      </script>
-   
-</div>
-    </div>
+        </script>
+
+      </div>
+    </div> -->
   </div>
 
 

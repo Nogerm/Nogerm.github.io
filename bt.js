@@ -2,12 +2,15 @@ let bluetoothDevice = null;
 let bluetoothDevice2 = null;
 let RXcharacteristic = null;
 let TXcharacteristic = null;
+let RXcharacteristic2 = null;
+let TXcharacteristic2 = null;
 let queryTimer = null;
 let query_interval = null;
 let updateTimer = null;
 let data_points = null;
 let remote_speed_up = null;
 let selectedTab = null;
+let selectedDevice = null;
 let logData = [];
 let newData = {
   pitch: 0,
@@ -28,6 +31,8 @@ let newData = {
   spd_pls: 0,
   fac_pls: 0,
   fac_mns: 0,
+  BLE_FLAG: 0,
+  IR_FY: 0,
 };
 
 //charts
@@ -48,10 +53,13 @@ const device_name_filter = "HST_UART";
 const default_query_interval = 50;
 const default_data_points = 40;
 const default_remote_speed_up = 0;
+const default_IR_dist = 2;
 const default_selected_tab = 1;
+const default_selected_device = 0;
 const default_log_number_return = 40;
 const x_label_interval = 150;
-const serviceUUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+const serviceUUID  = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+const serviceUUID2 = "6e400001-b5a3-f393-e0a9-e50e24dcca9a";
 const QUERY_DATA_HEADER   = 0xFF;
 const QUERY_LOG_HEADER    = 0xFD;
 const RESPONSE_HEADER_DAT = 0xFE;
@@ -65,6 +73,10 @@ const BLE_REMOTE_STOP        = 0xE3;
 const BLE_REMOTE_FUNC_1      = 0xE1;
 const BLE_REMOTE_FUNC_2      = 0xE0;
 
+const IR_DIST_1 = 0xF1;
+const IR_DIST_2 = 0xF2;
+const IR_DIST_3 = 0xF3;
+
 const BLE_REMOTE_2_FORWARD            = 0xDB;
 const BLE_REMOTE_2_BACKWARD           = 0xD9;
 const BLE_REMOTE_2_TURN_LEFT          = 0xD7;
@@ -74,10 +86,11 @@ const BLE_REMOTE_2_TURN_CIRCLE_RIGHT  = 0xD4;
 const BLE_REMOTE_2_STOP               = 0xD3;
 
 const RESPONSE_HEADER_POS = 0;
-const HEX_COLOR_GREEN = "#66bb6a";
-const HEX_COLOR_RED   = "#ef5350";
-const HEX_COLOR_BLUE  = "#42a5f5";
-const HEX_COLOR_GRAY  = "#e0e0e0";
+const HEX_COLOR_YELLOW = "#FFE599";
+const HEX_COLOR_GREEN  = "#66bb6a";
+const HEX_COLOR_RED    = "#ef5350";
+const HEX_COLOR_BLUE   = "#42a5f5";
+const HEX_COLOR_GRAY   = "#e0e0e0";
 
 //functions
 window.onload = function () {
@@ -89,9 +102,11 @@ window.onload = function () {
   data_points_field.value = default_data_points;
   data_points = default_data_points;
   const remote_speed_up_field = document.getElementById("remote_speed_up");
-  remote_speed_up_field.value = (remote_speed_up === null) ? default_remote_speed_up : remote_speed_up;
-
+  remote_speed_up_field.value = (remote_speed_up === null) ? default_IR_dist : remote_speed_up;
+ // const IR_dist_select_field = document.getElementByName("IR_dist_select");
+ // IR_dist_select_field.value = (IR_dist_select === null) ? default_IR_dist : IR_dist_select; 
   selectedTab = default_selected_tab;
+  selectedDevice = default_selected_device;
   document.getElementById("btn_scan").style.backgroundColor       = HEX_COLOR_GREEN;
   document.getElementById("btn_disconnect").style.backgroundColor = HEX_COLOR_GRAY;
   document.getElementById("btn_reconnect").style.backgroundColor  = HEX_COLOR_GRAY;
@@ -161,7 +176,7 @@ window.onload = function () {
 
     //update label factor minus
     document.getElementById("label-factor-minus").innerHTML = newData.fac_mns;
-
+    document.getElementById("label-IR-FY").innerHTML = newData.IR_FY;
     //update switch status
     document.getElementById("sw_lf").className = (newData.sw_lf == 0) ? "dot dotGreen" : "dot";
     document.getElementById("sw_lb").className = (newData.sw_lb == 0) ? "dot dotGreen" : "dot";
@@ -175,6 +190,14 @@ function radioChange(object) {
   selectedTab = parseInt(object.value);
   console.log('radio change: ' + selectedTab);
   startQueryTimer();
+}
+
+function getCheckboxValue(d_select) {
+  selectedDevice = parseInt(d_select.value);
+}
+function get_IR_CheckboxValue(IR_select) {
+  IR_dist_select_field = parseInt(IR_select.value);
+  setIRdistance();
 }
 
 function startQueryTimer() {
@@ -227,15 +250,15 @@ function onScanButtonClick2() {
       filters: [{
         name: device_name_filter
       }],
-      optionalServices: [serviceUUID]
+      optionalServices: [serviceUUID2]
     })
-    .then(device => {
-      console.log('> Name:             ' + device.name);
-      console.log('> Id:               ' + device.id);
-      console.log('> Connected:        ' + device.gatt.connected);
+    .then(device2 => {
+      console.log('> Name:             ' + device2.name);
+      console.log('> Id:               ' + device2.id);
+      console.log('> Connected:        ' + device2.gatt.connected);
 
-      bluetoothDevice2 = device;
-      bluetoothDevice2.addEventListener('gattserverdisconnected', onDisconnected);
+      bluetoothDevice2 = device2;
+      bluetoothDevice2.addEventListener('gattserverdisconnected2', onDisconnected2);
       connect2();
     })
     .catch(error => {
@@ -295,8 +318,6 @@ function connect() {
     });;
 }
 
-
-
 function connect2() {
   document.getElementById("query_interval").disabled = true;
 
@@ -320,24 +341,24 @@ function connect2() {
       console.log('characteristics found, getting characteristic...');
       characteristics.forEach((characteristic, index) => {
         console.log('>>>> Characteristics #' + (index + 1));
-        console.log('>>>> Characteristics uuid:  ' + characteristic.uuid);
+        console.log('>>>> Characteristics uuid:  ' + characteristic.uuid2);
         console.log('>>>> Characteristics read:  ' + characteristic.properties.read);
         console.log('>>>> Characteristics write: ' + characteristic.properties.write);
       });
-      TXcharacteristic = characteristics[0];
-      RXcharacteristic = characteristics[1];
+      TXcharacteristic2 = characteristics[0];
+      RXcharacteristic2 = characteristics[1];
 
-      RXcharacteristic.startNotifications()
+      RXcharacteristic2.startNotifications()
         .then(() => {
-          document.getElementById("btn_scan").disabled       = true;
-          document.getElementById("btn_scan").style.backgroundColor       = HEX_COLOR_GRAY;
-          document.getElementById("btn_disconnect").disabled = false;
-          document.getElementById("btn_disconnect").style.backgroundColor = HEX_COLOR_RED;
+          document.getElementById("btn_scan_2").disabled       = true;
+          document.getElementById("btn_scan_2").style.backgroundColor       = HEX_COLOR_GRAY;
+          document.getElementById("btn_disconnect_2").disabled = false;
+          document.getElementById("btn_disconnect_2").style.backgroundColor = HEX_COLOR_RED;
           document.getElementById("btn_reconnect").disabled  = true;
           document.getElementById("btn_reconnect").style.backgroundColor  = HEX_COLOR_GRAY;
 
           console.log('Notifications started');
-          RXcharacteristic.addEventListener('characteristicvaluechanged', parseData);
+          RXcharacteristic.addEventListener('characteristicvaluechanged2', parseData);
 
           startQueryTimer();
         });
@@ -347,6 +368,7 @@ function connect2() {
       console.log('connect error: ' + error);
     });;
 }
+
 
 function onDisconnectButtonClick() {
   if (!bluetoothDevice) {
@@ -360,6 +382,18 @@ function onDisconnectButtonClick() {
   }
 }
 
+function onDisconnectButtonClick2() {
+  if (!bluetoothDevice2) {
+    return;
+  }
+  console.log('Disconnecting from Bluetooth Device...');
+  if (bluetoothDevice2.gatt.connected) {
+    bluetoothDevice2.gatt.disconnect();
+    onDisconnected2();
+  } else {
+    console.log('> Bluetooth Device is already disconnected2');
+  }
+}
 function onDisconnected(event) {
   // Object event.target is Bluetooth Device getting disconnected.
   document.getElementById("query_interval").disabled = false;
@@ -374,6 +408,22 @@ function onDisconnected(event) {
   console.log('> Bluetooth Device disconnected');
   window.alert("Bluetooth Device is already disconnected");
 }
+
+function onDisconnected2(event) {
+  // Object event.target is Bluetooth Device getting disconnected.
+ //bdocument.getElementById("query_interval").disabled = false;
+  document.getElementById("btn_scan_2").disabled       = false;
+  document.getElementById("btn_scan_2").style.backgroundColor       = HEX_COLOR_YELLOW;
+  document.getElementById("btn_disconnect_2").disabled = true;
+  document.getElementById("btn_disconnect_2").style.backgroundColor = HEX_COLOR_GRAY;
+  document.getElementById("btn_reconnect").disabled  = false;
+  document.getElementById("btn_reconnect").style.backgroundColor    = HEX_COLOR_BLUE;
+
+ // clearData();
+  console.log('> Bluetooth Device disconnected');
+  window.alert("Bluetooth Device is already disconnected2");
+}
+
 
 function onReconnectButtonClick() {
   if (!bluetoothDevice) {
@@ -402,73 +452,136 @@ function onQueryLogButtonClick() {
 }
 
 
+
+
+
 function on_remote_fw_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_FORWARD);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 function on_remote_bk_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_BACKWARD );
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 function on_remote_L_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_TURN_LEFT);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 function on_remote_R_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_TURN_RIGHT);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 function on_remote_stop_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_STOP);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 
@@ -476,14 +589,26 @@ function on_remote_Demo_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_FUNC_1);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 ////////////////////////////Remote_2_function//////////////////////////
@@ -492,111 +617,207 @@ function on_remote_2_fw_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_2_FORWARD);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 function on_remote_2_bk_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_2_BACKWARD );
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 function on_remote_2_L_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_2_TURN_LEFT);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 function on_remote_2_L_circle_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_2_TURN_CIRCLE_LEFT);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 function on_remote_2_R_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_2_TURN_RIGHT);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
-}
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  }
 
 function on_remote_2_R_circle_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_2_TURN_CIRCLE_RIGHT);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 function on_remote_2_stop_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_2_STOP);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 function on_remote_func_2_ButtonClick() {
   let aBuffer_remote = new ArrayBuffer(1);
   let dataView_remote = new DataView(aBuffer_remote);
   dataView_remote.setUint8(0, BLE_REMOTE_FUNC_2);
-
-  TXcharacteristic.writeValue(aBuffer_remote)
-  .then(() => {
-    //console.log('writeValue ok');
-  })
-  .catch(error => {
-    //console.log('writeValue error: ' + error);
-  });
+  if(selectedDevice == 0 || selectedDevice == 1)
+  {
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2)
+  {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+  }
 }
 
 ////////////////////////Remote_2_function_End//////////////////////////
@@ -631,7 +852,40 @@ function setSpeedUpNum() {
   .catch(error => {
     //console.log('writeValue error: ' + error);
   });
+  TXcharacteristic2.writeValue(aBuffer_remote)
+  .then(() => {
+    //console.log('writeValue ok');
+  })
+  .catch(error => {
+    //console.log('writeValue error: ' + error);
+  });
 }
+
+function setIRdistance() {
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+switch(IR_dist_select_field)
+{
+  case 1:
+  dataView_remote.setUint8(0, IR_DIST_1);
+  break;
+  case 3:
+  dataView_remote.setUint8(0, IR_DIST_3);
+  break;
+  default:
+  case 2:
+  dataView_remote.setUint8(0, IR_DIST_2);
+  break;
+}
+    TXcharacteristic.writeValue(aBuffer_remote)
+    .then(() => {
+      //console.log('writeValue ok');
+    })
+    .catch(error => {
+      //console.log('writeValue error: ' + error);
+    });
+}
+
 
 function clearData() {
   newData.pitch_datum = 0;
@@ -652,6 +906,8 @@ function clearData() {
   newData.spd_pls = 0;
   newData.fac_pls = 0;
   newData.fac_mns = 0;
+  newData.BLE_FLAG = 0;
+  newData.IR_FY = 0;
 }
 
 function parseData(event) {
@@ -684,6 +940,8 @@ function parseData(event) {
         newData.sw_rf = parseInt(data_array[17]);
         newData.sw_lb = parseInt(data_array[18]);
         newData.sw_rb = parseInt(data_array[19]);
+        newData.BLE_FLAG = parseInt(data_array[20]);
+        newData.IR_FY = parseInt(data_array[21]);
       }} else if(selectedTab ==2) {
         let logData = getLogFromBytes(dataView);
         var str = '<ol type="1">'

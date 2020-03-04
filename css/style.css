@@ -23,6 +23,7 @@
   width:  150px;
   border-radius: 8px;
   margin-right: 10px;
+  margin-bottom: 10px;
   font-size: 20px;
   display: flex;
   justify-content: center;
@@ -36,8 +37,8 @@
   font-size: 20px;
   display: flex;
   justify-content: center;
-  margin-left: 164px;
-  margin-top: 14px;
+  margin-left: 0px;
+  margin-top: 0px;
 }
 
 .bgGreen {
