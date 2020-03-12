@@ -963,7 +963,7 @@ function getStringFromBytes(dataView) {
 
   //extract data
   let char_array = [];
-  for (let i = 1; i < 100; i++) {
+  for (let i = 1; i < 150; i++) {
     const ascii_value = dataView.getUint8(i);
     char_array.push(ascii_value);
   }
