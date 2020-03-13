@@ -947,9 +947,9 @@ function parseData(event) {
         let logData = getLogFromBytes(dataView);
         var str = '<ol type="1">'
 
-        logData.forEach(function(logEvent) {
-          str += '<li>'+ logEvent + '</li>';
-        }); 
+//        logData.forEach(function(logEvent) {
+//          str += '<li>'+ logEvent + '</li>';
+//        }); 
 
         str += '</ol>';
         document.getElementById("logListContainer").innerHTML = str;
