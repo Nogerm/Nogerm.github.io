@@ -214,7 +214,8 @@ function startQueryTimer() {
       .catch(error => {
         //console.log('writeValue error: ' + error);
       });
-    } else if (selectedTab === 2) {
+    } else if (selectedTab === 2 || selectedTab === 3 || selectedTab === 4 || selectedTab === 5 || selectedTab === 6)  
+    {
       clearInterval(queryTimer);
     }
   }, (query_interval === null) ? default_query_interval : query_interval);
