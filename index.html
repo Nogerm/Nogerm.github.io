@@ -1401,56 +1401,73 @@
       <input type="radio" name="cssTabs" value="3" id="tab-3" class="tab-switch" onchange="radioChange(this)">
       <label for="tab-3" class="tab-label">
         <i class="material-icons spaceRight">videogame_asset</i>Remote </label>
-      <div class="tab-content"> Remote control
+        <div class="tab-content"> Remote control
 
-        <br>
-        <table style="width:100%">
-          <tbody>
-            <tr>
-              <th>bnk</th>
-              <th>
-                <div class="button_2">
-                  <button id="btn_remote_forward" class="button" onclick="on_remote_fw_ButtonClick()">▲Forward▲</button>
-                </div>
-              </th>
-              <th></th>
-            </tr>
-          </tbody>
-        </table>
-
-
-        <div class="buttonContainer">
-          <button id="btn_remote_left" class="button" onclick="on_remote_L_ButtonClick()">◀Left</button>
-          <button id="btn_remote_stop" class="button" onclick="on_remote_stop_ButtonClick()">▉Stop</button>
-          <button id="btn_remote_right" class="button" onclick="on_remote_R_ButtonClick()">Right▶</button>
+          <br>
+  
+          
+            　
+            　
+            　
+            　
+            　
+              
+            　
+            　
+            　
+              　
+              　
+              　<table style="width:50%"><tbody><tr><td></td><td><button id="btn_remote_forward" class="button" onclick="on_remote_fw_ButtonClick()">Forward</button></td>
+              <td></td></tr><tr><td><button id="btn_remote_left" class="button" onclick="on_remote_L_ButtonClick()">Left</button></td><td><button id="btn_remote_stop" class="button" onclick="on_remote_stop_ButtonClick()">Stop</button></td>
+              <td><button id="btn_remote_right" class="button" onclick="on_remote_R_ButtonClick()">Right</button></td></tr>
+  
+                <tr><td></td><td><button id="btn_remote_backward" class="button" onclick="on_remote_bk_ButtonClick()">Backward</button></td>
+                <td></td></tr>
+            </tbody></table>
+          
+  <!--
+          <div class="buttonContainer">
+            <button id="btn_remote_left" class="button" onclick="on_remote_L_ButtonClick()">Left</button>
+            <button id="btn_remote_stop" class="button" onclick="on_remote_stop_ButtonClick()">Stop</button>
+            <button id="btn_remote_right" class="button" onclick="on_remote_R_ButtonClick()">Right</button>
+          </div>
+          <div class="button_2">
+            <button id="btn_remote_backward" class="button" onclick="on_remote_bk_ButtonClick()">Backward</button>
+          </div>-->
+          <div class="buttonContainer"> 
+            <button id="btn_func_1" class="button" onclick="on_remote_Demo_ButtonClick()">DriverON/OFF</button>
+            <button id="btn_func_2" class="button" onclick="on_remote_func_2_ButtonClick()">Transformation</button>
+          </div>
+          <br><br>
+          <label style="font-size:25px;color:darkseagreen;font-family:sans-serif;" ;="">Select Mode:</label>
+          <select id="remote_test_mode" onchange="setTestMode()">
+            <option value="#">請選擇</option>
+            <option value="0">Normal</option>
+            <!--          <option value="1">1</option>
+  <option value="2">NULL</option> -->
+            <option value="3">IR</option>
+            <option value="4">Free</option>
+            <option value="5">Outdoor</option>
+            <!-- <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option> -->
+          </select>
+          <br><br>
+          <label style="font-size:25px;color:darkseagreen;font-family:sans-serif;" ;="">Select IR distance:</label>
+          <label style="font-size:25px;font-family:sans-serif;"><input type="radio" name="IR_dist_select" value="1" onchange="get_IR_CheckboxValue(this)">1</label>
+          <label style="font-size:25px;font-family:sans-serif;"><input type="radio" name="IR_dist_select" value="2" onchange="get_IR_CheckboxValue(this)" checked="">2</label> <!-- 預設選項 -->
+          <label style="font-size:25px;font-family:sans-serif;"><input type="radio" name="IR_dist_select" value="3" onchange="get_IR_CheckboxValue(this)">3</label>
+          <br><br>
+          <div>
+            <label style="font-size:25px;color:darkseagreen;font-family:sans-serif;">DownHill Safety</label>
+            <label class="switch">
+              <input type="checkbox" id="Downhill_Safety" onclick="Downhill_Safety()" checked="">
+              <span class="slider round"></span>
+            </label>
+            <p id="text" style="display:none; font-size:30px;">Downhill_Safety is DISABLE!</p>
+          </div>
         </div>
-
-        <table style="width:100%">
-          <tbody border:="">
-            <tr>
-              <th>bnk</th>
-              <th>
-                <div class="button_2">
-                  <button id="btn_remote_backward" class="button" onclick="on_remote_bk_ButtonClick()">▼Backward▼</button>
-                </div>
-              </th>
-              <th></th>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="buttonContainer">
-          <button id="btn_func_1" class="button" onclick="on_remote_Demo_ButtonClick()">Demo</button>
-          <button id="btn_func_2" class="button" onclick="on_remote_func_2_ButtonClick()">Transformation</button>
-        </div>
-        <br>
-        <label>Select IR distance:</label>
-        <label><input type="radio" name="IR_dist_select" value="1" onchange="get_IR_CheckboxValue(this)">1</label>
-        <label><input type="radio" name="IR_dist_select" value="2" onchange="get_IR_CheckboxValue(this)"
-            checked>2</label> <!-- 預設選項 -->
-        <label><input type="radio" name="IR_dist_select" value="3" onchange="get_IR_CheckboxValue(this)">3</label>
-        <br><br>
-      </div>
     </div>
 
 
