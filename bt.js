@@ -193,6 +193,7 @@ window.onload = function () {
   }, (query_interval === null) ? default_query_interval : query_interval);
 }
 
+
 function radioChange(object) {
   selectedTab = parseInt(object.value);
   console.log('radio change: ' + selectedTab);
@@ -839,6 +840,64 @@ function setSpeedUpNum() {
     .catch(error => {
       //console.log('writeValue error: ' + error);
     });
+}
+
+function setACC() {
+  const newACCNum = parseInt(document.getElementById("acc_range").value)+0xC0;
+  console.log("Set ACC: " + newACCNum);
+  remote_acc = newACCNum;
+
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, remote_acc);
+
+  if (selectedDevice == 0 || selectedDevice == 1) {
+    TXcharacteristic.writeValue(aBuffer_remote)
+      .then(() => {
+        //console.log('writeValue ok');
+      })
+      .catch(error => {
+        //console.log('writeValue error: ' + error);
+      });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2) {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+      .then(() => {
+        //console.log('writeValue ok');
+      })
+      .catch(error => {
+        //console.log('writeValue error: ' + error);
+      });
+  }
+}
+
+function setDEC() {
+  const newDECNum = parseInt(document.getElementById("dec_range").value)+0x70;
+  console.log("Set DEC: " + newDECNum);
+  remote_dec = newDECNum;
+
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, remote_dec);
+
+  if (selectedDevice == 0 || selectedDevice == 1) {
+    TXcharacteristic.writeValue(aBuffer_remote)
+      .then(() => {
+        //console.log('writeValue ok');
+      })
+      .catch(error => {
+        //console.log('writeValue error: ' + error);
+      });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2) {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+      .then(() => {
+        //console.log('writeValue ok');
+      })
+      .catch(error => {
+        //console.log('writeValue error: ' + error);
+      });
+  }
 }
 
 function setTestMode() {
