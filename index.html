@@ -1441,18 +1441,27 @@
           <br><br>
 
           <div class="slidecontainer">
-            <label style="font-size:25px;color:darkseagreen;font-family:sans-serif;" ;="">Set ACC:</label><br>
-            <input type="range" min="1" max="6" value="2" class="slider1" id="acc_range">
-            <p>Value: <span id="acc"></span></p>
+            <label style="font-size:25px;color:darkseagreen;font-family:sans-serif;">Set MAX:</label>
+            <input type="range" min="0" max="6" value="0" class="slider1" id="factor_range">
+            Value: <span id="factor" style="font-size:25px;color:darkseagreen;font-family:sans-serif;"></span>
           </div>
   
           <div class="slidecontainer">
-            <label style="font-size:25px;color:darkseagreen;font-family:sans-serif;" ;="">Set DEC:</label><br>
+            <label style="font-size:25px;color:darkseagreen;font-family:sans-serif;">Set ACC:</label>
+            <input type="range" min="1" max="6" value="2" class="slider1" id="acc_range">
+            Value: <span id="acc" style="font-size:25px;color:darkseagreen;font-family:sans-serif;"></span>
+          </div>
+  
+          <div class="slidecontainer">
+            <label style="font-size:25px;color:darkseagreen;font-family:sans-serif;">Set DEC:</label>
             <input type="range" min="1" max="6" value="2" class="slider1" id="dec_range">
-            <p>Value: <span id="dec"></span></p>
+            Value: <span id="dec" style="font-size:25px;color:darkseagreen;font-family:sans-serif;"></span>
           </div>
           
           <script>
+            var slider0 = document.getElementById("factor_range");
+            var output0 = document.getElementById("factor");
+            output0.innerHTML = slider0.value;
             var slider1 = document.getElementById("acc_range");
             var output1 = document.getElementById("acc");
             output1.innerHTML = slider1.value;
@@ -1460,6 +1469,10 @@
             var output2 = document.getElementById("dec");
             output2.innerHTML = slider2.value;
             
+            slider0.oninput = function() {
+              output0.innerHTML = this.value;
+              setFactor();
+            }          
             slider1.oninput = function() {
               output1.innerHTML = this.value;
               setACC();

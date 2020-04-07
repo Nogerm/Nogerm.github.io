@@ -842,6 +842,35 @@ function setSpeedUpNum() {
     });
 }
 
+function setFactor() {
+  const newFactorNum = parseInt(document.getElementById("factor_range").value)+0xC7;//C7~CD
+  console.log("Set factor: " + newFactorNum);
+  remote_factor = newFactorNum;
+
+  let aBuffer_remote = new ArrayBuffer(1);
+  let dataView_remote = new DataView(aBuffer_remote);
+  dataView_remote.setUint8(0, remote_factor);
+
+  if (selectedDevice == 0 || selectedDevice == 1) {
+    TXcharacteristic.writeValue(aBuffer_remote)
+      .then(() => {
+        //console.log('writeValue ok');
+      })
+      .catch(error => {
+        //console.log('writeValue error: ' + error);
+      });
+  }
+  if (selectedDevice == 0 || selectedDevice == 2) {
+    TXcharacteristic2.writeValue(aBuffer_remote)
+      .then(() => {
+        //console.log('writeValue ok');
+      })
+      .catch(error => {
+        //console.log('writeValue error: ' + error);
+      });
+  }
+}
+
 function setACC() {
   const newACCNum = parseInt(document.getElementById("acc_range").value)+0xC0;
   console.log("Set ACC: " + newACCNum);
